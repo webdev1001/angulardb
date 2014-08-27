@@ -1,0 +1,45 @@
+.modal-dialog {
+	overflow: auto;
+}
+.modal-lg {
+	width: 90%;
+}
+.modal-content {
+	padding: 16px;
+}
+.nav-tabs {
+	text-transform: uppercase;
+	cursor: pointer;
+	li.active { font-weight: bold; }
+}
+.sites-table {
+	thead, div.row.head { font-weight: bold; }
+	div.row {
+		word-wrap: break-word;
+		&.head {
+			.not-padded { padding: 0; }
+			font-size: 0.9em;
+			text-transform: uppercase;
+		}
+		&.body {
+			.body-wrapper {
+				font-size: 0.9em;
+				border-bottom: 1px solid #ccc;
+				.padded { padding: 4px 0; }
+				input {
+					background-color: transparent;
+					border: none;
+				}
+			}
+		}
+	}
+	.collapsed {
+		width: 95%;
+	}
+	button {
+		font-size: 16px;
+		padding: 0;
+		padding-right: 5px;
+	}
+}
+

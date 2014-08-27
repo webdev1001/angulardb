@@ -1,0 +1,35 @@
+@import "var";
+@import "search";
+@import "modals";
+
+/* app css stylesheet */
+body {
+	font-family: "Open Sans", sans-serif;
+}
+
+.copyright {
+	margin: 48px 0;
+	p {
+		margin-top: 24px;
+	}
+}
+
+// tables
+table, thead, tbody, tr, td {
+	text-align: left;
+	p {
+		margin: 0;
+	}
+	.controls {
+		width: 100%;
+
+	}
+}
+table {
+	@include box-shadow( 2px 2px 5px 0px rgba(50, 50, 50, 1));
+}
+
+// bootstrap
+.glyphicon {
+	margin-left: 5px!important;
+}

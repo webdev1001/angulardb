@@ -1,0 +1,15 @@
+{
+  "name": "ci2",
+  "description": "",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ajschlosser/ci2/",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-bootstrap": "~0.11.0",
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1",
+    "ui-router": "~0.2.10"
+  }
+}
