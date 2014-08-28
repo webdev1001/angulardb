@@ -1,5 +1,15 @@
 var uiControllers = angular.module("uiControllers", []);
 
+uiControllers.controller("searchResultsController", function ($scope) {
+	$scope.results = 0;
+	$scope.update = function () {
+		$scope.results++;
+	};
+	$scope.showMore = function () {
+
+	};
+});
+
 uiControllers.controller("loginModalController", function ($scope, $modal) {
 	$scope.open = function () {
 		var modalInstance = $modal.open({
