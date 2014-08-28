@@ -2,6 +2,7 @@
 
 var app = angular.module("searchApp", [
 	"uiControllers",
+	"searchDirectives",
 	"ui.router",
 	"ui.bootstrap"
 ]);
@@ -80,7 +81,13 @@ app.controller("searchCtrl", function ($scope, $http, services) {
 				}
 				$scope.clients[i] = client;
 			}
+			$scope.results = 0;
 			$scope.quantity = 10;
+			$scope.increment = 10;
+			$scope.clients.sort(function (a,b) {
+				return a.name > b.name ? 1 : -1;
+			});
+			$scope.clients.toBeReversed = true;
 		});
 	});
 });

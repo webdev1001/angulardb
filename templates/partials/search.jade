@@ -2,34 +2,24 @@
 	.search-container-inner
 		h1(ng-if="q.$") #[i.glyphicon.glyphicon-search]
 		input#search(type="search" ng-model="q.$" value="" placeholder="start typing..." ng-style="q.$ && {'margin-top': '3%'} || !q.$ && {'margin-top': '20%'}" ng-class="q.$ && test" autofocus).search.form-control
-		.row.center-justify.shrunk(ng-show="q.$")
-			label show&nbsp;
-			select.form-control.tenth.center(ng-model="quantity")
-					option 5
-					option(selected="selected") 10
-					option 25
-					option 50
-					option 75
-					option 100
-					option 150
-					option 200
-					option 300
-					option 400
-					option 500
-					option 1000
 		.row.three-fourths.center
 			.results-container(ng-if="q.$" ng-controller="searchResultsController")
+				.row.center-justify
+					label show
+					| &nbsp;
+					input.form-control.quantity(type="number" min="1" value="{{quantity}}" ng-model="quantity" ng-maxlength="4")
+					| &nbsp;results
 				tabset
 					tab(heading="clients")
 						table.table.table-hover.table-condensed.center
 							thead
 								tr
-									th.col-md-1 #
-									th.col-md-9 Client Name
-									th.col-md-1 Sites
-									th.col-md-1
+									th.col-md-1.clickable(ng-click="sort('id')") #
+									th.col-md-9.clickable(ng-click="sort('name')") Client Name
+									th.col-md-1.clickable(ng-click="sort('sites')") Sites
+									th.col-md-1.clickable
 							tbody
-								tr(ng-repeat="client in clients | filter:q:strict | limitTo:quantity")
+								tr(ng-repeat="client in clients | filter:q:strict | limitTo:quantity" ng-init="update()")
 									td.col-md-1.success(ng-if="client.id.toLowerCase().indexOf(q.$.toLowerCase()) != -1") {{client.id}}
 									td.col-md-1(ng-if="client.id.toLowerCase().indexOf(q.$.toLowerCase()) == -1") {{client.id}}
 									td.col-md-9.success(ng-if="client.name.toLowerCase().indexOf(q.$.toLowerCase()) != -1") {{client.name}}
@@ -39,7 +29,7 @@
 										include modals/_clientDetails.jade
 					tab(heading="web sites")
 						div(ng-repeat="client in clients | filter:q:strict | limitTo:quantity" ng-controller="collapseController")
-							h4 {{client.name}}
+							h4(ng-if="client.sites.length > 0") {{client.name}}
 							table.table.table-striped.table-hover.table-condensed.center.sites-table(ng-if="client.sites.length > 0")
 								theads
 									tr
@@ -92,6 +82,7 @@
 													.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
 													.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
 											br
-				h3 test
+				.row.center-justify
+					button.btn.btn-primary(ng-if="results < clients.length" ng-click="showMore(quantity)") show {{quantity}} more
 
 

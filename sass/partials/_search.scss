@@ -1,12 +1,10 @@
-#search {
-	@include transition-duration(0.2s);
-}
 .results {
 	word-wrap: break-word;
 }
-input.search {
-	text-align: center;
-	margin-top: 25%;
+input.quantity {
+	margin-top: 16px;
+	display: inline;
+	width: 10%;
 }
 select {
 	display: inline-block!important;

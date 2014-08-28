@@ -18,8 +18,8 @@ div.right(ng-controller="clientDetailsModalController")
 						tbody
 							tr(ng-repeat="site in client.sites")
 								td.col-md-1 {{site.id}}
-								td.col-md-3 {{site.name}}
-								td.col-md-7 {{site.url}}
+								td.col-md-3 {{site.name || "None provided." }}
+								td.col-md-7 {{site.url || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
 									.collapsed(collapse="isCollapsed")
 										br
 										.row.head.shrunk
@@ -36,8 +36,8 @@ div.right(ng-controller="clientDetailsModalController")
 										br
 								td.col-md-1.right-justify
 									button.btn.btn-default.toggle(ng-click="isCollapsed = !isCollapsed")
-										i.glyphicon.glyphicon-chevron-down(ng-if="isCollapsed")
-										i.glyphicon.glyphicon-chevron-up(ng-if="!isCollapsed")
+										i.glyphicon.glyphicon-chevron-down(ng-if="isCollapsed" tooltip="More on {{site.name}}" tooltip-placement="left")
+										i.glyphicon.glyphicon-chevron-up(ng-if="!isCollapsed" tooltip="Less on {{site.name}}" tooltip-placement="left")
 				tab(heading="Logins")
 					h4.center-justify.no-padding #[i.glyphicon.glyphicon-log-in] Logins
 					table.table.table-striped.table-hover.table-condensed.center.sites-table(ng-repeat="site in client.sites track by $index")
