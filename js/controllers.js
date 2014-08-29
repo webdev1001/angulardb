@@ -1,19 +1,17 @@
+var authControllers = angular.module("authControllers", []);
+
 var uiControllers = angular.module("uiControllers", []);
 
 uiControllers.controller("searchResultsController", function ($scope, $filter) {
 	$scope.results = 0;
 	$scope.update = function () {
 		$scope.results++;
-		console.log("Showing %d/%d", $scope.results, $scope.quantity);
 		if ($scope.results === $scope.quantity) {
 			$scope.results = 0;
-			console.log("Resetting to ", $scope.results);
 		}
 	};
 	$scope.showMore = function (n) {
-		console.log($scope.quantity)
 		$scope.quantity += n;
-		//$scope.results += $scope.quantity - $scope.increment;
 		$scope.results = 0;
 	};
 	$scope.sort = function (predicate) {
@@ -113,3 +111,29 @@ var loginModalInstanceController = function ($scope, $modalInstance) {
 		console.log($scope);
 	}
 };
+
+authControllers.controller("authenticationController", function ($state, $scope, $rootScope, md5, ipCookie) {
+	$scope.login = function () {
+		if ($scope.u) {
+			var users = $scope.$parent.users;
+			var i = users.length;
+			while (i--) {
+				var user = users[i];
+				if ($scope.u.name === user.name &&
+					md5.createHash($scope.u.pass || '') === user.pass) {
+					var currentUser = {
+						name: user.name,
+						pass: user.pass,
+						authenticated: true
+					};
+					$rootScope.authenticated = true;
+					$rootScope.currentUser = currentUser;
+					ipCookie("user", currentUser);
+					$state.go("search");
+				}
+			}
+			$scope.message.text = "u wot m8";
+			$scope.message.type = "alert-danger";
+		}
+	};
+});

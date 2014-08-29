@@ -2,9 +2,12 @@
 
 var app = angular.module("searchApp", [
 	"uiControllers",
+	"authControllers",
 	"searchDirectives",
 	"ui.router",
-	"ui.bootstrap"
+	"ui.bootstrap",
+	"ipCookie",
+	"angular-md5"
 ]);
 
 app.factory("services", ["$http", function($http) {
@@ -22,7 +25,11 @@ app.factory("services", ["$http", function($http) {
 	return obj;	 
 }]);
 
-app.controller("searchCtrl", function ($scope, $http, services) {
+app.controller("searchCtrl", function ($rootScope, $state, $scope, $http, services) {
+	if (!$rootScope.authenticated) {
+		console.log("oops");
+			$state.go("login");
+		}
 	services.getClients().then(function(clients) {
 		services.getLogins().then(function(logins) {
 			$scope.logins = logins.data;
@@ -92,10 +99,24 @@ app.controller("searchCtrl", function ($scope, $http, services) {
 	});
 });
 
-app.controller("loginCtrl", function ($scope, services) {
+app.controller("loginCtrl", function ($rootScope, $scope, $location, services, ipCookie) {
 	services.login().then(function(data) {
+		$scope.message = {};
 		$scope.users = data.data;
+		var users = $scope.users;
+		var i = users.length;
+		while (i--) {
+			var user = {};
+			user.name = users[i].admin_username;
+			user.pass = users[i].admin_password;
+			$scope.users[i] = user;
+		}
 	});
+	$scope.logout = function () {
+		ipCookie.remove("user");
+		$rootScope.authenticated = false;
+		$location.path("login");
+	}
 });
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -106,10 +127,23 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			controller: "searchCtrl",
 			templateUrl: "partials/search.php"
 		})
+		.state('login', {
+			url: "/login",
+			controller: "loginCtrl",
+			templateUrl: "partials/login.php"
+		});
 });
 
-app.run(["$location", "$rootScope", function($location, $rootScope) {
-	$rootScope.$on("$routeChangeSuccess", function (event, current, previous) {
-		$rootScope.title = current.$$route.title;
+app.run(function ($rootScope, $location, ipCookie) {
+	$rootScope.$on("$stateChangeStart", function () {
+		if (!$rootScope.authenticated) {
+			var u = ipCookie("user");
+			if (u) {
+				$rootScope.authenticated = true;
+				console.log("logged in as", u.name, u.pass);
+				$rootScope.currentUser = u;
+			}
+			else $location.path("login");
+		}
 	});
-}]);
+});

@@ -23,7 +23,7 @@ html(class="no-js", lang="en", ng-app="searchApp")
 		header
 			.row(ng-controller="loginCtrl")
 				.col-md-10
-				.col-md-2(ng-controller="loginModalController")
+				.col-md-2(ng-controller="loginModalController" ng-if="!authenticated")
 					button.btn.btn-primary(ng-click="open()") #[i.glyphicon.glyphicon-user] Sign In
 					script(type="text/ng-template" id="loginModal.html")
 						.modal-header
@@ -33,7 +33,9 @@ html(class="no-js", lang="en", ng-app="searchApp")
 							input(type="text" placeholder="password" ng-model="u.pass")
 						.modal-footer
 							button.btn.btn-primary(ng-click="cancel()") Nevermind.
-							button.btn.btn-primary(ng-click="login(u.name)") Let's go!
+							button.btn.btn-primary(ng-click="login()") Let's go!
+				.col-md-2(ng-if="authenticated")
+					button.btn.btn-primary(ng-click="logout()") Log Out ({{currentUser.name}})
 
 		div(ui-view)
 
@@ -43,6 +45,8 @@ html(class="no-js", lang="en", ng-app="searchApp")
 
 		script(src="bower_components/angular/angular.js")
 		script(src="bower_components/angular-route/angular-route.js")
+		script(src="bower_components/angular-cookie/angular-cookie.min.js")
+		script(src="bower_components/angular-md5/angular-md5.js")
 		script(src="bower_components/ui-router/release/angular-ui-router.js")
 		script(src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js")
 		script(src="bower_components/jquery/dist/jquery.js")

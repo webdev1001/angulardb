@@ -43,7 +43,7 @@
 		// API Functions
 		private function login() {
 			$this->check_request_method();
-			$query = "SELECT u.* FROM users u";
+			$query = "SELECT u.* FROM admin u";
 			$this->parseQuery($query);
 		}
 		private function getLogins() {
