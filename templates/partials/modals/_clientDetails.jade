@@ -43,7 +43,7 @@ div.right(ng-controller="clientDetailsModalController")
 					table.table.table-striped.table-hover.table-condensed.center.sites-table(ng-repeat="site in client.sites track by $index")
 						thead
 							tr
-								th {{site.name}}
+								th {{site.name || site.logins.connections[0] + ", etc."}} | {{client.name}}
 						tbody
 							tr
 								td

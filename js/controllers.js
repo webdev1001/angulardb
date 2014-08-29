@@ -111,7 +111,7 @@ var loginModalInstanceController = function ($scope, $modalInstance) {
 		console.log($scope);
 	}
 };
-
+//client in clients | filter:q:strict | limitTo:quantity
 authControllers.controller("authenticationController", function ($state, $scope, $rootScope, md5, ipCookie) {
 	$scope.login = function () {
 		if ($scope.u) {

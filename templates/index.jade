@@ -31,9 +31,9 @@ html(class="no-js", lang="en", ng-app="searchApp")
 						.modal-body
 							input(type="text" placeholder="username" ng-model="u.name")
 							input(type="text" placeholder="password" ng-model="u.pass")
-						.modal-footer
+						.modal-footer(ng-controller="loginCtrl")
 							button.btn.btn-primary(ng-click="cancel()") Nevermind.
-							button.btn.btn-primary(ng-click="login()") Let's go!
+							button.btn.btn-primary(ng-click="login()" ng-controller="authenticationController") Let's go!
 				.col-md-2(ng-if="authenticated")
 					button.btn.btn-primary(ng-click="logout()") Log Out ({{currentUser.name}})
 
