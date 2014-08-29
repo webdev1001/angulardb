@@ -1,0 +1,16 @@
+table.table.table-hover.table-condensed.center
+	thead
+		tr
+			th.col-md-1.clickable(ng-click="sort('id')") #
+			th.col-md-9.clickable(ng-click="sort('name')") Client Name
+			th.col-md-1.clickable(ng-click="sort('sites')") Sites
+			th.col-md-1.clickable
+	tbody
+		tr(ng-repeat="client in clients | filter:q:strict | limitTo:quantity" ng-init="update()")
+			td.col-md-1.success(ng-if="client.id.toLowerCase().indexOf(q.$.toLowerCase()) != -1") {{client.id}}
+			td.col-md-1(ng-if="client.id.toLowerCase().indexOf(q.$.toLowerCase()) == -1") {{client.id}}
+			td.col-md-9.success(ng-if="client.name.toLowerCase().indexOf(q.$.toLowerCase()) != -1") {{client.name}}
+			td.col-md-9(ng-if="client.name.toLowerCase().indexOf(q.$.toLowerCase()) == -1") {{client.name}}
+			td.col-md-1 {{client.sites.length}}
+			td.col-md-1
+				include ../modals/_clientDetails.jade

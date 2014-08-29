@@ -106,9 +106,18 @@ app.controller("loginCtrl", function ($rootScope, $scope, $location, services, i
 		var users = $scope.users;
 		var i = users.length;
 		while (i--) {
+			var u = users[i];
 			var user = {};
-			user.name = users[i].admin_username;
-			user.pass = users[i].admin_password;
+			user.name = u.admin_username;
+			user.pass = u.admin_password;
+			user.names = {
+				first: u.admin_firstname,
+				last: u.admin_lastname
+			};
+			user.email = u.admin_email;
+			user.phone = u.admin_phone;
+			user.title = u.admin_title;
+			user.pic = u.admin_picpath;
 			$scope.users[i] = user;
 		}
 	});

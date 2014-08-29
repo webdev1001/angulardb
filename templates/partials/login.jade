@@ -1,10 +1,11 @@
 .login-container(ng-controller="authenticationController")
 	h2.center-justify login
 	.row.center-justify.form-group
-		br
-		input.form-control.tenth.center(type="text" placeholder="username" ng-model="u.name" autofocus)
-		input.form-control.tenth.center(type="password" placeholder="password" ng-model="u.pass")
-		br
-		.message(class="alert {{message.type}}" role="alert" ng-if="message.text") {{message.text}}
-		br
-		button.btn.btn-primary(type="submit" ng-click="login()") let's go
+		form
+			br
+			input.form-control.tenth.center(type="text" placeholder="username" ng-model="u.name" autofocus)
+			input.form-control.tenth.center(type="password" placeholder="password" ng-model="u.pass")
+			br
+			.message(class="alert {{message.type}}" role="alert" ng-if="message.text") {{message.text}}
+			br
+			button.btn.btn-primary(type="submit" ng-click="login()") let's go

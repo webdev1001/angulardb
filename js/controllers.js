@@ -117,6 +117,7 @@ authControllers.controller("authenticationController", function ($state, $scope,
 		if ($scope.u) {
 			var users = $scope.$parent.users;
 			var i = users.length;
+			var match = false;
 			while (i--) {
 				var user = users[i];
 				if ($scope.u.name === user.name &&
@@ -129,11 +130,14 @@ authControllers.controller("authenticationController", function ($state, $scope,
 					$rootScope.authenticated = true;
 					$rootScope.currentUser = currentUser;
 					ipCookie("user", currentUser);
+					match = true;
 					$state.go("search");
 				}
 			}
-			$scope.message.text = "u wot m8";
-			$scope.message.type = "alert-danger";
+			if (!match) {
+				$scope.message.text = "username or password no bueno";
+				$scope.message.type = "alert-danger";
+			}
 		}
 	};
 });

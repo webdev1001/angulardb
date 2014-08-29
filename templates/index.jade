@@ -23,17 +23,6 @@ html(class="no-js", lang="en", ng-app="searchApp")
 		header
 			.row(ng-controller="loginCtrl")
 				.col-md-10
-				.col-md-2(ng-controller="loginModalController" ng-if="!authenticated")
-					button.btn.btn-primary(ng-click="open()") #[i.glyphicon.glyphicon-user] Sign In
-					script(type="text/ng-template" id="loginModal.html")
-						.modal-header
-							h1 Sign In
-						.modal-body
-							input(type="text" placeholder="username" ng-model="u.name")
-							input(type="text" placeholder="password" ng-model="u.pass")
-						.modal-footer(ng-controller="loginCtrl")
-							button.btn.btn-primary(ng-click="cancel()") Nevermind.
-							button.btn.btn-primary(ng-click="login()" ng-controller="authenticationController") Let's go!
 				.col-md-2(ng-if="authenticated")
 					button.btn.btn-primary(ng-click="logout()") Log Out ({{currentUser.name}})
 

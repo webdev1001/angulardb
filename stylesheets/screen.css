@@ -257,42 +257,47 @@ select option:after, select option:before {
   padding-right: 5px;
 }
 
+/* line 1, ../sass/partials/_login.scss */
+.login-container {
+  margin-top: 15%;
+}
+
 /* app css stylesheet */
-/* line 6, ../sass/partials/_app.scss */
+/* line 7, ../sass/partials/_app.scss */
 body {
   font-family: "Open Sans", sans-serif;
 }
 
-/* line 10, ../sass/partials/_app.scss */
+/* line 11, ../sass/partials/_app.scss */
 .copyright {
   margin: 48px 0;
 }
-/* line 12, ../sass/partials/_app.scss */
+/* line 13, ../sass/partials/_app.scss */
 .copyright p {
   margin-top: 24px;
 }
 
-/* line 18, ../sass/partials/_app.scss */
+/* line 19, ../sass/partials/_app.scss */
 table, thead, tbody, tr, td {
   text-align: left;
 }
-/* line 20, ../sass/partials/_app.scss */
+/* line 21, ../sass/partials/_app.scss */
 table p, thead p, tbody p, tr p, td p {
   margin: 0;
 }
-/* line 23, ../sass/partials/_app.scss */
+/* line 24, ../sass/partials/_app.scss */
 table .controls, thead .controls, tbody .controls, tr .controls, td .controls {
   width: 100%;
 }
 
-/* line 28, ../sass/partials/_app.scss */
+/* line 29, ../sass/partials/_app.scss */
 table {
   -webkit-box-shadow: 2px 2px 5px 0px #323232;
   -moz-box-shadow: 2px 2px 5px 0px #323232;
   box-shadow: 2px 2px 5px 0px #323232;
 }
 
-/* line 33, ../sass/partials/_app.scss */
+/* line 34, ../sass/partials/_app.scss */
 .glyphicon {
   margin-left: 5px !important;
 }

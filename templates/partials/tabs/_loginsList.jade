@@ -1,0 +1,21 @@
+div(ng-repeat="client in clients | filter:q:strict | limitTo:quantity")
+	table.table.table-striped.table-hover.table-condensed.center.sites-table(ng-repeat="site in client.sites track by $index")
+		thead
+			tr
+				th {{client.name}} | {{site.name || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
+		tbody
+			tr
+				td
+					br
+					.row.head.shrunk
+						.col-md-3.not-padded Type
+						.col-md-3.not-padded Connection
+						.col-md-3.not-padded Username
+						.col-md-3.not-padded Password
+					.row.body.shrunk(ng-repeat="login in site.logins.types track by $index | filter:q:strict | limitTo:quantity")
+						.body-wrapper(ng-controller="dataCopyController")
+							.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.types[$index] != null ? site.logins.types[$index] : "n/a"}}
+							.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.connections[$index] != null ? site.logins.connections[$index] : "n/a"}}
+							.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
+							.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
+					br

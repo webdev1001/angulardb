@@ -1,0 +1,32 @@
+div(ng-repeat="client in clients | filter:q:strict | limitTo:quantity" ng-controller="collapseController")
+	h4(ng-if="client.sites.length > 0") {{client.name}}
+	table.table.table-striped.table-hover.table-condensed.center.sites-table(ng-if="client.sites.length > 0")
+		theads
+			tr
+				th.col-md-1 #
+				th.col-md-3 Name
+				th.col-md-7 URL
+				th.col-md-1
+		tbody
+			tr(ng-repeat="site in client.sites | filter:q:strict | limitTo:quantity")
+				td.col-md-1 {{site.id}}
+				td.col-md-3 {{site.name || "None provided."}}
+				td.col-md-7 {{site.url || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
+					.collapsed(collapse="isCollapsed")
+						br
+						.row.head.shrunk
+							.col-md-3 Type
+							.col-md-3 Connection
+							.col-md-3 Username
+							.col-md-3 Password
+						.row.body.shrunk(ng-repeat="login in site.logins.types track by $index")
+							.body-wrapper(ng-controller="dataCopyController" tooltip="Click any field to select. Click again to deselect." tooltip-placement="left")
+								.col-md-3(ng-click="toggleInput($event)") {{site.logins.types[$index] != null ? site.logins.types[$index] : "n/a"}}
+								.col-md-3(ng-click="toggleInput($event)") {{site.logins.connections[$index] != null ? site.logins.connections[$index] : "n/a"}}
+								.col-md-3(ng-click="toggleInput($event)") {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
+								.col-md-3(ng-click="toggleInput($event)") {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
+						br
+				td.col-md-1.right-justify
+					button.btn.btn-default.toggle(ng-click="isCollapsed = !isCollapsed")
+						i.glyphicon.glyphicon-chevron-down(ng-if="isCollapsed")
+						i.glyphicon.glyphicon-chevron-up(ng-if="!isCollapsed")

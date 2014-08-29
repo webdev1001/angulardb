@@ -1,0 +1,13 @@
+table.table.table-hover.table-condensed.center(ng-controller="loginCtrl")
+	thead
+		tr
+			th.col-md-3 Name
+			th.col-md-3 Title
+			th.col-md-3 Email
+			th.col-md-3 Phone
+	tbody
+		tr(ng-repeat="user in users | filter:q:strict ")
+			td.col-md-3 {{user.names.first}} {{user.names.last}} ({{user.name}})
+			td.col-md-3 {{user.title}}
+			td.col-md-3 {{user.email}}
+			td.col-md-3 {{user.phone}}
