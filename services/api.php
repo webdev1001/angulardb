@@ -63,7 +63,6 @@
 		private function loginUser() {
 			$user = $_GET["user"];
 			$pass = $_GET["pass"];
-			mail("aaron.j.schlosser@gmail.com","test","test");
 			if ($this->checkSha1($user) && $this->checkSha1($pass)) {
 				$query = "SELECT u.* FROM admin u WHERE SHA1(BINARY u.admin_username)='".$user."'";
 				$result = $this->getUnParsedQuery($query);
