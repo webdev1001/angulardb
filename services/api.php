@@ -77,6 +77,26 @@
 					ON ws.w_client_id = c.client_id";
 			$this->parseQuery($query);
 		}
+		function updateClient($id) {
+			$request = Slim::getInstance()->request();
+			$body = $request->getBody();
+			$user = json_decode($body);
+			//$sql = "UPDATE clients SET firstname=:firstname, lastname=:lastname, email=:email, company=:company WHERE id=:id";
+			try {
+				$db = getConnection();
+				$stmt = $db->prepare($sql);  
+				$stmt->bindParam("firstname", $user->firstname);
+				$stmt->bindParam("lastname", $user->lastname);
+				$stmt->bindParam("email", $user->email);
+				$stmt->bindParam("company", $user->company);
+				$stmt->bindParam("id", $id);
+				$stmt->execute();
+				$db = null;
+				echo json_encode($user); 
+			} catch(PDOException $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+			}
+		}
 	}
 
 	$api = new API;
