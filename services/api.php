@@ -27,6 +27,7 @@
 
 		// Utility Functions
 		private function jsonify($data) { if(is_array($data)) return json_encode($data); }
+		private function checkSha1($s) { if(preg_match("/^[A-Fa-f0-9]{40}$/", $s) > 0) return true; return false; }
 
 		// Database Functions
 		private function dbConnect() { $this->mysqli = new mysqli(self::DB_SERVER, self::DB_USER, self::DB_PASSWORD, self::DB); }
@@ -39,11 +40,51 @@
 			}
 			$this->response("",204);
 		}
+		private function getParsedQuery($query) {
+			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+			if($r->num_rows > 0){
+				$result = array();
+				while($row = $r->fetch_assoc()) $result[] = $row;
+				return $this->jsonify($result);
+			}
+			return null;
+		}
+		private function getUnParsedQuery($query) {
+			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+			if($r->num_rows > 0){
+				$result = array();
+				while($row = $r->fetch_assoc()) $result[] = $row;
+				return $result;
+			}
+			return null;
+		}
 
 		// API Functions
-		private function login() {
+		private function loginUser() {
+			$user = $_GET["user"];
+			$pass = $_GET["pass"];
+			mail("aaron.j.schlosser@gmail.com","test","test");
+			if ($this->checkSha1($user) && $this->checkSha1($pass)) {
+				$query = "SELECT u.* FROM admin u WHERE SHA1(BINARY u.admin_username)='".$user."'";
+				$result = $this->getUnParsedQuery($query);
+				if ($result) {
+					$stored_pass = $result[0]["admin_password"];
+					if ($pass == $stored_pass) $this->response($this->jsonify($result), 200);
+					echo "Error: Password does not match.";
+					return null;
+				}
+			}
+			echo "Error: Incorrect parameters." . $_SERVER["REQUEST_URI"];
+			return null;
+		}
+		private function getUsers() {
 			$this->check_request_method();
-			$query = "SELECT u.* FROM admin u";
+			$query = "SELECT u.admin_firstname,
+				u.admin_lastname,
+				u.admin_username,
+				u.admin_email,
+				u.admin_phone,
+				u.admin_title from admin u";
 			$this->parseQuery($query);
 		}
 		private function getLogins() {

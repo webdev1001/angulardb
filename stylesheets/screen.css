@@ -36,43 +36,48 @@
 }
 
 /* line 19, ../sass/partials/_var.scss */
+.left-justify {
+  text-align: left;
+}
+
+/* line 20, ../sass/partials/_var.scss */
 .no-margins {
   margin: 0;
 }
 
-/* line 22, ../sass/partials/_var.scss */
+/* line 23, ../sass/partials/_var.scss */
 .no-padding {
   padding: 0;
 }
 
-/* line 25, ../sass/partials/_var.scss */
+/* line 26, ../sass/partials/_var.scss */
 .shrunk {
   margin: 0;
   padding: 0;
 }
 
-/* line 29, ../sass/partials/_var.scss */
+/* line 30, ../sass/partials/_var.scss */
 .right {
   text-align: right;
 }
 
-/* line 32, ../sass/partials/_var.scss */
+/* line 33, ../sass/partials/_var.scss */
 .clickable {
   cursor: pointer;
 }
 
-/* line 35, ../sass/partials/_var.scss */
+/* line 36, ../sass/partials/_var.scss */
 .not-clickable {
   cursor: default !important;
 }
 
-/* line 40, ../sass/partials/_var.scss */
+/* line 41, ../sass/partials/_var.scss */
 em {
   color: red;
   font-style: normal;
 }
 
-/* line 44, ../sass/partials/_var.scss */
+/* line 45, ../sass/partials/_var.scss */
 a {
   text-decoration: none;
   color: black;
@@ -81,7 +86,7 @@ a {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
-/* line 48, ../sass/partials/_var.scss */
+/* line 49, ../sass/partials/_var.scss */
 a:hover {
   color: gray;
   text-decoration: none;
@@ -260,6 +265,33 @@ select option:after, select option:before {
 /* line 1, ../sass/partials/_login.scss */
 .login-container {
   margin-top: 15%;
+}
+/* line 3, ../sass/partials/_login.scss */
+.login-container input {
+  margin-top: 5px;
+}
+/* line 6, ../sass/partials/_login.scss */
+.login-container button {
+  width: 80px;
+  margin-top: 5px;
+}
+/* line 10, ../sass/partials/_login.scss */
+.login-container .message {
+  margin-bottom: 0;
+}
+/* line 14, ../sass/partials/_login.scss */
+.login-container .help .content p {
+  padding: 5px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  margin-top: 5px;
+  width: 40%;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
 }
 
 /* app css stylesheet */

@@ -111,33 +111,34 @@ var loginModalInstanceController = function ($scope, $modalInstance) {
 		console.log($scope);
 	}
 };
-//client in clients | filter:q:strict | limitTo:quantity
-authControllers.controller("authenticationController", function ($state, $scope, $rootScope, md5, ipCookie) {
+
+authControllers.controller("authenticationController", function ($state, $scope, $rootScope, services, ipCookie) {
 	$scope.login = function () {
-		if ($scope.u) {
-			var users = $scope.$parent.users;
-			var i = users.length;
-			var match = false;
-			while (i--) {
-				var user = users[i];
-				if ($scope.u.name === user.name &&
-					md5.createHash($scope.u.pass || '') === user.pass) {
+		$scope.message = {};
+		if ($scope.u && $scope.u.name && $scope.u.pass) {
+			var user = CryptoJS.SHA1($scope.u.name);
+			var pass = CryptoJS.SHA1($scope.u.pass);
+			services.loginUser(user,pass).then(function(data) {
+				var u = data.data[0];
+				if (u.admin_username) {
 					var currentUser = {
-						name: user.name,
-						pass: user.pass,
+						name: u.admin_username,
+						pass: u.admin_password,
+						email: u.admin_email,
 						authenticated: true
 					};
-					$rootScope.authenticated = true;
 					$rootScope.currentUser = currentUser;
+					$rootScope.authenticated = true;
 					ipCookie("user", currentUser);
-					match = true;
 					$state.go("search");
+				} else {
+					$scope.message.text = "username or password no bueno";
+					$scope.message.type = "alert-danger";
 				}
-			}
-			if (!match) {
-				$scope.message.text = "username or password no bueno";
-				$scope.message.type = "alert-danger";
-			}
+			});
+		} else {
+			$scope.message.text = "forget something?";
+			$scope.message.type = "alert-warning";
 		}
 	};
 });

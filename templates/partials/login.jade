@@ -8,4 +8,11 @@
 			br
 			.message(class="alert {{message.type}}" role="alert" ng-if="message.text") {{message.text}}
 			br
-			button.btn.btn-primary(type="submit" ng-click="login()") let's go
+			.controls(ng-controller="collapseController")
+				button.btn.btn-primary(type="submit" ng-click="login()") let's go
+				.help(ng-if="message.text")
+					button.btn.btn-warning(ng-click="isCollapsed = !isCollapsed") help
+					.collapsed(collapse="isCollapsed")
+						.content
+							p Your username is your High Rank username. For security reasons, it is not the same as your email address.
+							p If you have forgotten your username, please contact an administrator.

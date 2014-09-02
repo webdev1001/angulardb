@@ -6,8 +6,7 @@ var app = angular.module("searchApp", [
 	"searchDirectives",
 	"ui.router",
 	"ui.bootstrap",
-	"ipCookie",
-	"angular-md5"
+	"ipCookie"
 ]);
 
 app.factory("services", ["$http", function($http) {
@@ -19,8 +18,11 @@ app.factory("services", ["$http", function($http) {
 	obj.getLogins = function() {
 		return $http.get(serviceBase + "getLogins");
 	}
-	obj.login = function() {
-		return $http.get(serviceBase + "login");
+	obj.loginUser = function(user,pass) {
+		return $http.get(serviceBase + "loginUser?user=" + user + "&pass=" + pass);
+	}
+	obj.getUsers = function() {
+		return $http.get(serviceBase + "getUsers");
 	}
 	return obj;	 
 }]);
@@ -100,32 +102,32 @@ app.controller("searchCtrl", function ($rootScope, $state, $scope, $http, servic
 });
 
 app.controller("loginCtrl", function ($rootScope, $scope, $location, services, ipCookie) {
-	services.login().then(function(data) {
-		$scope.message = {};
-		$scope.users = data.data;
-		var users = $scope.users;
-		var i = users.length;
-		while (i--) {
-			var u = users[i];
-			var user = {};
-			user.name = u.admin_username;
-			user.pass = u.admin_password;
-			user.names = {
-				first: u.admin_firstname,
-				last: u.admin_lastname
-			};
-			user.email = u.admin_email;
-			user.phone = u.admin_phone;
-			user.title = u.admin_title;
-			user.pic = u.admin_picpath;
-			$scope.users[i] = user;
-		}
-	});
 	$scope.logout = function () {
 		ipCookie.remove("user");
 		$rootScope.authenticated = false;
 		$location.path("login");
 	}
+});
+
+app.controller("userCtrl", function ($scope, services) {
+	services.getUsers().then(function(data) {
+		$scope.users = data.data;
+		var i = $scope.users.length;
+		while (i--) {
+			var u = $scope.users[i];
+			var user = {
+				name: u.admin_username,
+				names: {
+					first: u.admin_firstname,
+					last: u.admin_lastname
+				},
+				email: u.admin_email,
+				phone: u.admin_phone,
+				title: u.admin_title
+			};
+			$scope.users[i] = user;
+		}
+	});
 });
 
 app.config(function($stateProvider, $urlRouterProvider) {
