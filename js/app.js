@@ -15,6 +15,9 @@ app.factory("services", ["$http", function($http) {
 	obj.getClients = function() {
 		return $http.get(serviceBase + "getClients");
 	}
+	obj.updateClient = function(data) {
+		return $http.post(serviceBase + "updateClient", data);
+	}
 	obj.getLogins = function() {
 		return $http.get(serviceBase + "getLogins");
 	}

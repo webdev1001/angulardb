@@ -61,6 +61,7 @@ div.right(ng-controller="clientDetailsModalController")
 											.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
 									br
 		.modal-footer
+			button.btn.btm-primary(ng-click="update()") Update
 			button.btn.btn-primary(ng-click="ok()") OK
 			br
 			.row

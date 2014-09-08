@@ -117,25 +117,28 @@
 					ON ws.w_client_id = c.client_id";
 			$this->parseQuery($query);
 		}
-		function updateClient($id) {
-			$request = Slim::getInstance()->request();
-			$body = $request->getBody();
-			$user = json_decode($body);
-			//$sql = "UPDATE clients SET firstname=:firstname, lastname=:lastname, email=:email, company=:company WHERE id=:id";
-			try {
-				$db = getConnection();
-				$stmt = $db->prepare($sql);  
-				$stmt->bindParam("firstname", $user->firstname);
-				$stmt->bindParam("lastname", $user->lastname);
-				$stmt->bindParam("email", $user->email);
-				$stmt->bindParam("company", $user->company);
-				$stmt->bindParam("id", $id);
-				$stmt->execute();
-				$db = null;
-				echo json_encode($user); 
-			} catch(PDOException $e) {
-				echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-			}
+		function updateClient() {
+			$postdata = file_get_contents("php://input");
+			$request = json_decode($postdata);
+			$stmt = $this->mysqli->prepare("UPDATE client SET client_name = ?,
+				client_description = ?,
+				last_edited_date = ?,
+				last_edited_by = ?
+				WHERE client_id = ?");
+			$stmt->bind_param("ssssi",
+				$name,
+				$desc,
+				$date,
+				$by,
+				$id);
+			$name = $request->client_name;
+			$desc = $request->client_description;
+			$date = $request->last_edited_date;
+			$by = $request->last_edited_by;
+			$id = $request->client_id;
+			$stmt->execute();
+			$this->mysqli->commit();
+			$stmt->close();
 		}
 	}
 
