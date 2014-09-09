@@ -1,31 +1,20 @@
-uiControllers.controller("loginModalController", function ($scope, $modal) {
-	$scope.open = function () {
+uiControllers.controller("clientListModalsController", function ($scope, $modal, $log) {
+	$scope.view = function (client) {
 		var modalInstance = $modal.open({
-			templateUrl: "loginModal.html",
-			controller: loginModalInstanceController,
-			size: "sm"
-		});
-	};
-});
-
-uiControllers.controller("clientDetailsModalController", function ($scope, $modal, $log) {
-	$scope.open = function (client) {
-		var modalInstance = $modal.open({
-			templateUrl: "myModalContent.html",
+			templateUrl: "clientDetailsModal.html",
 			controller: clientDetailsModalInstanceController,
 			size: "lg",
-			resolve: {
-				client: function () {
-					return client;
-				}
-			}
-		});
-		modalInstance.result.then(function (selectedItem) {
-			$scope.selected = selectedItem;
-		}, function () {
-			$log.info("Modal dismissed at: " + new Date());
+			resolve: { client: function () { return client; } }
 		});
 	};
+	$scope.edit = function (client) {
+		var modalInstance = $modal.open({
+			templateUrl: "clientEditModal.html",
+			controller: clientEditModalInstanceController,
+			size: "lg",
+			resolve: { client: function () { return client; } }
+		});
+	}
 });
 
 var clientDetailsModalInstanceController = function ($scope, $modalInstance, services, client) {
@@ -44,18 +33,16 @@ var clientDetailsModalInstanceController = function ($scope, $modalInstance, ser
 			last_edited_date: getTimestamp()
 		};
 		console.log(data);
-		services.updateClient(data).then(function (data) {
-			console.log("echoed data:", data);
-		})
+		//services.updateClient(data).then(function (data) {
+		//	console.log("echoed data:", data);
+		//});
 	}
 	$scope.ok = function () { $modalInstance.close(); };
 	$scope.cancel = function () { $modalInstance.dismiss("cancel"); };
 };
 
-var loginModalInstanceController = function ($scope, $modalInstance) {
+var clientEditModalInstanceController = function ($scope, $modalInstance, services, client) {
+	$scope.client = client;
 	$scope.ok = function () { $modalInstance.close(); };
 	$scope.cancel = function () { $modalInstance.dismiss("cancel"); };
-	$scope.login = function (credentials) {
-		console.log($scope);
-	}
 };

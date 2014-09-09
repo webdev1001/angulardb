@@ -48,8 +48,8 @@ uiControllers.controller("searchController", function ($scope, $filter) {
 viewControllers.controller("searchViewController", function ($rootScope, $state, $scope, $http, services) {
 	if (!$rootScope.authenticated) {
 		console.log("oops");
-			$state.go("login");
-		}
+		$state.go("login");
+	}
 	services.getClients().then(function(clients) {
 		services.getLogins().then(function(logins) {
 			$scope.logins = logins.data;
@@ -66,6 +66,7 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 			for (var i in $scope.clients) {
 				var c = $scope.clients[i];
 				var client = {
+					category: "client",
 					id: c.client_id,
 					name: c.client_name,
 					description: c.client_description,
@@ -90,10 +91,12 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 								var l = $scope.logins[k];
 								if (l.website_id === c.w_website_ids[j] && l.l_login_types) {
 									var site = {
+										category: "site",
 										id: l.website_id,
 										name: c.w_website_names[j],
 										url: c.w_website_urls[j],
 										logins: {
+											category: "login",
 											types: l.l_login_types,
 											connections: l.l_login_connections,
 											usernames: l.l_login_usernames,

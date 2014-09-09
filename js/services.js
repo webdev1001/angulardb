@@ -18,5 +18,8 @@ apiServices.factory("services", ["$http", function($http) {
 	obj.getUsers = function() {
 		return $http.get(serviceBase + "getUsers");
 	}
+	obj.commitChanges = function(data) {
+		return $http.post(serviceBase + "commitChanges", data);
+	}
 	return obj;	 
 }]);

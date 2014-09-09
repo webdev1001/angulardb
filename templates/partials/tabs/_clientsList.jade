@@ -13,8 +13,9 @@ table.table.table-hover.table-condensed.center
 			td.col-md-8(ng-if="client.name.toLowerCase().indexOf(q.$.toLowerCase()) == -1") {{client.name}}
 			td.col-md-1 {{client.sites.length}}
 			td.col-md-2
-				.right(ng-controller="clientDetailsModalController")
+				.right(ng-controller="clientListModalsController")
 					.btn-group(tooltip="Edit or view the details of {{client.name}}'s account." tooltip-placement="left")
 						button.btn.btn-primary(ng-click="edit(client)") #[i.glyphicon.glyphicon-edit]&nbsp;
-						button.btn.btn-primary(ng-click="open(client)") #[i.glyphicon.glyphicon-search]&nbsp;
+						button.btn.btn-primary(ng-click="view(client)") #[i.glyphicon.glyphicon-search]&nbsp;
 						include ../modals/_clientDetails.jade
+						include ../modals/_clientEdit.jade
