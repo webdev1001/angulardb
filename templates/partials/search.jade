@@ -3,7 +3,7 @@
 		h1(ng-if="q.$") #[i.glyphicon.glyphicon-search]
 		input#search(type="search" ng-model="q.$" value="" placeholder="start typing..." ng-style="q.$ && {'margin-top': '3%'} || !q.$ && {'margin-top': '20%'}" ng-class="q.$ && test" autofocus).search.form-control
 		.row.three-fourths.center
-			.results-container(ng-if="q.$" ng-controller="searchResultsController")
+			.results-container(ng-if="q.$" ng-controller="searchController")
 				.row.center-justify
 					label show
 					| &nbsp;

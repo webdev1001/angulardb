@@ -57,27 +57,34 @@
 }
 
 /* line 30, ../sass/partials/_var.scss */
+.super-shrunk {
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+}
+
+/* line 35, ../sass/partials/_var.scss */
 .right {
   text-align: right;
 }
 
-/* line 33, ../sass/partials/_var.scss */
+/* line 38, ../sass/partials/_var.scss */
 .clickable {
   cursor: pointer;
 }
 
-/* line 36, ../sass/partials/_var.scss */
+/* line 41, ../sass/partials/_var.scss */
 .not-clickable {
   cursor: default !important;
 }
 
-/* line 41, ../sass/partials/_var.scss */
+/* line 46, ../sass/partials/_var.scss */
 em {
   color: red;
   font-style: normal;
 }
 
-/* line 45, ../sass/partials/_var.scss */
+/* line 50, ../sass/partials/_var.scss */
 a {
   text-decoration: none;
   color: black;
@@ -86,7 +93,7 @@ a {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
-/* line 49, ../sass/partials/_var.scss */
+/* line 54, ../sass/partials/_var.scss */
 a:hover {
   color: gray;
   text-decoration: none;

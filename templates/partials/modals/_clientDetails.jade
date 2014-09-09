@@ -1,69 +1,68 @@
-div.right(ng-controller="clientDetailsModalController")
-	button.btn.btn-primary(ng-click="open(client)" tooltip="Click for detailed information about {{client.name}}'s account." tooltip-placement="left") #[i.glyphicon.glyphicon-search]&nbsp;
-	script(type="text/ng-template" id="myModalContent.html")
-		.modal-header
-			h2 #[i.glyphicon.glyphicon-list-alt] {{client.name}}
-			p.center-justify Click on any field to copy it to the clipboard. Press ESC to close this window.
-		.modal-body
-			tabset
-				tab(heading="Websites" ng-controller="collapseController")
-					h4.center-justify.no-padding #[i.glyphicon.glyphicon-list] Websites
-					table.table.table-striped.table-hover.table-condensed.center.sites-table
-						thead
-							tr
-								th.col-md-1 #
-								th.col-md-3 Name
-								th.col-md-7 URL
-								th.col-md-1
-						tbody
-							tr(ng-repeat="site in client.sites")
-								td.col-md-1 {{site.id}}
-								td.col-md-3 {{site.name || "None provided." }}
-								td.col-md-7 {{site.url || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
-									.collapsed(collapse="isCollapsed")
-										br
-										.row.head.shrunk
-											.col-md-3 Type
-											.col-md-3 Connection
-											.col-md-3 Username
-											.col-md-3 Password
-										.row.body.shrunk(ng-repeat="login in site.logins.types track by $index")
-											.body-wrapper(ng-controller="dataCopyController" tooltip="Click any field to select. Click again to deselect." tooltip-placement="left")
-												.col-md-3(ng-click="toggleInput($event)") {{site.logins.types[$index] != null ? site.logins.types[$index] : "n/a"}}
-												.col-md-3(ng-click="toggleInput($event)") {{site.logins.connections[$index] != null ? site.logins.connections[$index] : "n/a"}}
-												.col-md-3(ng-click="toggleInput($event)") {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
-												.col-md-3(ng-click="toggleInput($event)") {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
-										br
-								td.col-md-1.right-justify
-									button.btn.btn-default.toggle(ng-click="isCollapsed = !isCollapsed")
-										i.glyphicon.glyphicon-chevron-down(ng-if="isCollapsed" tooltip="More on {{site.name}}" tooltip-placement="left")
-										i.glyphicon.glyphicon-chevron-up(ng-if="!isCollapsed" tooltip="Less on {{site.name}}" tooltip-placement="left")
-				tab(heading="Logins")
-					h4.center-justify.no-padding #[i.glyphicon.glyphicon-log-in] Logins
-					table.table.table-striped.table-hover.table-condensed.center.sites-table(ng-repeat="site in client.sites track by $index")
-						thead
-							tr
-								th {{site.name || site.logins.connections[0] + ", etc."}} | {{client.name}}
-						tbody
-							tr
-								td
+script(type="text/ng-template" id="myModalContent.html")
+	.modal-header
+		h2 #[i.glyphicon.glyphicon-list-alt] {{client.name}}
+		p.center-justify Click on any field to copy it to the clipboard. Press ESC to close this window.
+	.modal-body
+		tabset
+			tab(heading="Websites" ng-controller="collapseController")
+				h4.center-justify.no-padding #[i.glyphicon.glyphicon-list] Websites
+				table.table.table-striped.table-hover.table-condensed.center.sites-table
+					thead
+						tr
+							th.col-md-1 #
+							th.col-md-3 Name
+							th.col-md-7 URL
+							th.col-md-1
+					tbody
+						tr(ng-repeat="site in client.sites")
+							td.col-md-1: span(toggle-input): {{site.id}}
+							td.col-md-3: span(toggle-input): {{site.name || "None provided." }}
+							td.col-md-7
+								span(toggle-input) {{site.url || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
+								.collapsed(collapse="isCollapsed")
 									br
 									.row.head.shrunk
-										.col-md-3.not-padded Type
-										.col-md-3.not-padded Connection
-										.col-md-3.not-padded Username
-										.col-md-3.not-padded Password
+										.col-md-3 Type
+										.col-md-3 Connection
+										.col-md-3 Username
+										.col-md-3 Password
 									.row.body.shrunk(ng-repeat="login in site.logins.types track by $index")
-										.body-wrapper(ng-controller="dataCopyController")
-											.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.types[$index] != null ? site.logins.types[$index] : "n/a"}}
-											.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.connections[$index] != null ? site.logins.connections[$index] : "n/a"}}
-											.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
-											.col-md-3.padded(ng-click="toggleInput($event)") {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
+										.body-wrapper(tooltip="Click any field to select. Click again to deselect." tooltip-placement="left")
+											.col-md-3(toggle-input) {{site.logins.types[$index] != null ? site.logins.types[$index] : "n/a"}}
+											.col-md-3(toggle-input) {{site.logins.connections[$index] != null ? site.logins.connections[$index] : "n/a"}}
+											.col-md-3(toggle-input) {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
+											.col-md-3(toggle-input) {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
 									br
-		.modal-footer
-			button.btn.btm-primary(ng-click="update()") Update
-			button.btn.btn-primary(ng-click="ok()") OK
-			br
-			.row
-				.col-md-12.center-justify
-					img(src="img/hrwlogo1.png")
+							td.col-md-1.right-justify
+								button.btn.btn-default.toggle(ng-click="isCollapsed = !isCollapsed")
+									i.glyphicon.glyphicon-chevron-down(ng-if="isCollapsed" tooltip="More on {{site.name}}" tooltip-placement="left")
+									i.glyphicon.glyphicon-chevron-up(ng-if="!isCollapsed" tooltip="Less on {{site.name}}" tooltip-placement="left")
+			tab(heading="Logins")
+				h4.center-justify.no-padding #[i.glyphicon.glyphicon-log-in] Logins
+				table.table.table-striped.table-hover.table-condensed.center.sites-table(ng-repeat="site in client.sites track by $index")
+					thead
+						tr
+							th {{site.name || site.logins.connections[0] + ", etc."}} | {{client.name}}
+					tbody
+						tr
+							td
+								br
+								.row.head.shrunk
+									.col-md-3.not-padded Type
+									.col-md-3.not-padded Connection
+									.col-md-3.not-padded Username
+									.col-md-3.not-padded Password
+								.row.body.shrunk(ng-repeat="login in site.logins.types track by $index")
+									.body-wrapper
+										.col-md-3.padded(toggle-input) {{site.logins.types[$index] != null ? site.logins.types[$index] : "n/a"}}
+										.col-md-3.padded(toggle-input) {{site.logins.connections[$index] != null ? site.logins.connections[$index] : "n/a"}}
+										.col-md-3.padded(toggle-input) {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
+										.col-md-3.padded(toggle-input) {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
+								br
+	.modal-footer
+		button.btn.btn-primary(ng-click="update()") Update
+		button.btn.btn-primary(ng-click="ok()") OK
+		br
+		.row
+			.col-md-12.center-justify
+				img(src="img/hrwlogo1.png")

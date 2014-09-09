@@ -3,7 +3,7 @@
 var app = angular.module("searchApp", [
 	"uiControllers",
 	"authControllers",
-	"searchDirectives",
+	"uiDirectives",
 	"ui.router",
 	"ui.bootstrap",
 	"ipCookie"

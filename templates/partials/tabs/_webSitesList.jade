@@ -9,9 +9,10 @@ div(ng-repeat="client in clients | filter:q:strict | limitTo:quantity" ng-contro
 				th.col-md-1
 		tbody
 			tr(ng-repeat="site in client.sites | filter:q:strict | limitTo:quantity")
-				td.col-md-1 {{site.id}}
-				td.col-md-3 {{site.name || "None provided."}}
-				td.col-md-7 {{site.url || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
+				td.col-md-1: span(toggle-input): {{site.id}}
+				td.col-md-3: span(toggle-input): {{site.name || "None provided."}}
+				td.col-md-7
+					span(toggle-input): {{site.url || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
 					.collapsed(collapse="isCollapsed")
 						br
 						.row.head.shrunk
@@ -20,11 +21,11 @@ div(ng-repeat="client in clients | filter:q:strict | limitTo:quantity" ng-contro
 							.col-md-3 Username
 							.col-md-3 Password
 						.row.body.shrunk(ng-repeat="login in site.logins.types track by $index")
-							.body-wrapper(ng-controller="dataCopyController" tooltip="Click any field to select. Click again to deselect." tooltip-placement="left")
-								.col-md-3(ng-click="toggleInput($event)") {{site.logins.types[$index] != null ? site.logins.types[$index] : "n/a"}}
-								.col-md-3(ng-click="toggleInput($event)") {{site.logins.connections[$index] != null ? site.logins.connections[$index] : "n/a"}}
-								.col-md-3(ng-click="toggleInput($event)") {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
-								.col-md-3(ng-click="toggleInput($event)") {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
+							.body-wrapper(tooltip="Click any field to select. Click again to deselect." tooltip-placement="left")
+								.col-md-3(toggle-input) {{site.logins.types[$index] != null ? site.logins.types[$index] : "n/a"}}
+								.col-md-3(toggle-input) {{site.logins.connections[$index] != null ? site.logins.connections[$index] : "n/a"}}
+								.col-md-3(toggle-input) {{site.logins.usernames[$index] != null ? site.logins.usernames[$index] : "n/a"}}
+								.col-md-3(toggle-input) {{site.logins.passwords[$index] != null ? site.logins.passwords[$index] : "n/a"}}
 						br
 				td.col-md-1.right-justify
 					button.btn.btn-default.toggle(ng-click="isCollapsed = !isCollapsed")
