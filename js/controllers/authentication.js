@@ -1,4 +1,5 @@
 authControllers.controller("authenticationController", function ($state, $scope, $rootScope, services, ipCookie) {
+	$scope.isCollapsed = true;
 	$scope.login = function () {
 		$scope.message = {};
 		if ($scope.u && $scope.u.name && $scope.u.pass) {
@@ -27,4 +28,12 @@ authControllers.controller("authenticationController", function ($state, $scope,
 			$scope.message.type = "alert-warning";
 		}
 	};
+});
+
+viewControllers.controller("loginController", function ($rootScope, $scope, $location, services, ipCookie) {
+	$scope.logout = function () {
+		ipCookie.remove("user");
+		$rootScope.authenticated = false;
+		$location.path("login");
+	}
 });

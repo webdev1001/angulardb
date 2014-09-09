@@ -1,11 +1,3 @@
-var searchDirectives = angular.module("searchDirectives", []);
-
-searchDirectives.directive("searchListDirective", function () {
-	return function(scope) {
-		console.log("what");
-	};
-});
-
 var uiDirectives = angular.module("uiDirectives", []);
 
 uiDirectives.directive("toggleInput", function() {

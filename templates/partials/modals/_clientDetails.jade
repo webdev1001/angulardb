@@ -4,7 +4,7 @@ script(type="text/ng-template" id="myModalContent.html")
 		p.center-justify Click on any field to copy it to the clipboard. Press ESC to close this window.
 	.modal-body
 		tabset
-			tab(heading="Websites" ng-controller="collapseController")
+			tab(heading="Websites")
 				h4.center-justify.no-padding #[i.glyphicon.glyphicon-list] Websites
 				table.table.table-striped.table-hover.table-condensed.center.sites-table
 					thead
@@ -15,8 +15,8 @@ script(type="text/ng-template" id="myModalContent.html")
 							th.col-md-1
 					tbody
 						tr(ng-repeat="site in client.sites")
-							td.col-md-1: span(toggle-input): {{site.id}}
-							td.col-md-3: span(toggle-input): {{site.name || "None provided." }}
+							td.col-md-1: span(toggle-input) {{site.id}}
+							td.col-md-3: span(toggle-input) {{site.name || "None provided." }}
 							td.col-md-7
 								span(toggle-input) {{site.url || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
 								.collapsed(collapse="isCollapsed")

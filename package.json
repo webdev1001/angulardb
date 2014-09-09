@@ -1,8 +1,8 @@
 {
-  "name": "ci2",
+  "name": "angulardb",
   "version": "0.0.1",
   "description": "",
-  "repository": "https://github.com/ajschlosser/ci2/",
+  "repository": "https://github.com/ajschlosser/angulardb/",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.3.1",

@@ -33,6 +33,7 @@ var clientDetailsModalInstanceController = function ($scope, $modalInstance, ser
 		var currentDate = new Date();
 		return currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
 	}
+	$scope.isCollapsed = true;
 	$scope.client = client;
 	$scope.update = function () {
 		var data = {
