@@ -1,8 +1,20 @@
 script(type="text/ng-template" id="clientEditModal.html")
 	.modal-header
-		h2 #[i.glyphicon.glyphicon-list-alt] {{client.name}}
+		h2 #[i.glyphicon.glyphicon-list-alt] Edit {{edit.name}}
 	.modal-body
-		div(list-attributes)
+		.row.center-justify(list-attributes)
+			.col-md-6
+				label(for="id") ID
+				input(name="id" value="{{edit.id}}")
+				label(for="name") Name
+				input(name="name" value="{{edit.name}}")
+			.col-md-6
+				label(for="description") Description
+				textarea(name="description") {{edit.description}}
+		.row.center-justify(ng-if="edit.sites" ng-repeat="site in edit.sites")
+			.row
+				.col-md-12
+					h3 {{site.name}}
 	.modal-footer
 		button.btn.btn-warning(ng-click="update()") Submit
 		button.btn.btn-primary(ng-click="ok()") Nevermind

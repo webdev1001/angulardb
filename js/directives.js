@@ -30,6 +30,8 @@ uiDirectives.directive("listAttributes", function() {
 		var obj = scope.client;
 		var sites = [];
 		var logins = [];
+		var result = {};
+		result["sites"] = {};
 		for (var prop in obj) {
 			if (prop !== "category" && prop !== "$$hashKey") {
 				var value = obj[prop];
@@ -37,31 +39,27 @@ uiDirectives.directive("listAttributes", function() {
 					iterateOverNestedObject(value);
 				} else {
 					if (typeof value === "string") {
-						var label = "<label class='listed-attribute-input-label' for='"+prop+"'>"+prop.charAt(0).toUpperCase()+prop.slice(1)+"</label>";
-						var input = "<input class='listed-attribute-input' type='text' name='"+prop+"' value='"+value+"'>";
-						if (prop === "description") input = "<textarea class='listed-attribute-input'name='"+prop+"'>" + value + "</textarea>";
-						element.parent().append(label);
-						element.parent().append(input);
+						//var label = "<label class='listed-attribute-input-label' for='"+prop+"'>"+prop.charAt(0).toUpperCase()+prop.slice(1)+"</label>";
+						//var input = "<input class='listed-attribute-input' type='text' name='"+prop+"' value='"+value+"'>";
+						//if (prop === "description") input = "<textarea class='listed-attribute-input'name='"+prop+"'>" + value + "</textarea>";
+						//element.parent().append(label);
+						//element.parent().append(input);
+						result[""+prop+""] = value;
 					}
 				}
 			}
 		}
-		element.parent().append("<hr>");
+		//element.parent().append("<hr>");
 		i = sites.length;
 		while (i--) {
 			var site = sites[i];
-			element.parent().append("<h4>"+site.name+"</h4>");
-			for (var prop in site) {
-				if (prop !== "category" && prop !== "$$hashKey" && prop !== "logins") {
-					var value = site[prop];
-					var label = "<label class='listed-attribute-input-label' for='"+prop+"'>"+prop.charAt(0).toUpperCase()+prop.slice(1)+"</label>";
-					var input = "<input class='listed-attribute-input' type='text' name='"+prop+"' value='"+value+"'>";
-					element.parent().append(label);
-					element.parent().append(input);
-				}
-			}
+			site.category = "site";
+			result["sites"][""+site.name+""] = site;
+			//element.parent().append("<h4>"+site.name+"</h4>");
 		}
+		console.log("Result: ", result);
 		console.log("Sites: ", sites.length);
 		console.log("Logins: ", logins.length);
+		scope.edit = result;
 	}
 })
