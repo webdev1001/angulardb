@@ -45,13 +45,10 @@ uiControllers.controller("searchController", function ($scope, $filter) {
 	}
 });
 
-viewControllers.controller("searchViewController", function ($rootScope, $state, $scope, $http, services, objects, utilities) {
-	if (!$rootScope.authenticated) {
-		console.log("oops");
-		$state.go("login");
-	}
-	services.getClients().then(function(clients) {
-		services.getLogins().then(function(logins) {
+viewControllers.controller("searchViewController", function ($rootScope, $state, $scope, $http, api, objects, utilities) {
+	if (!$rootScope.authenticated) $state.go("login");
+	api.getClients().then(function(clients) {
+		api.getLogins().then(function(logins) {
 			$scope.logins = logins.data;
 			for (var i in $scope.logins) {
 				var l = $scope.logins[i];
@@ -60,6 +57,7 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 			$scope.clients = clients.data;
 			for (var i in $scope.clients) {
 				var c = $scope.clients[i];
+				if (c.client_id == "3" || c.client_id == 3) console.log(c);
 				var client = new objects.Client(
 					c.client_id,
 					c.client_name,
@@ -68,9 +66,7 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 					{ a: c.creation_date, b: c.last_edited_date }
 				);
 				if (c.w_client_id) {
-					c.w_website_names = c.w_website_names.split(",");
-					c.w_website_urls = c.w_website_urls.split(",");
-					c.w_website_ids = c.w_website_ids.split(",");
+					c = utilities.explode(c,",","w_web");
 					if (c.w_website_ids.length > 0) {
 						for (var j in c.w_website_ids) {
 							for (var k in $scope.logins) {
@@ -99,9 +95,7 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 			$scope.results = 0;
 			$scope.quantity = 10;
 			$scope.increment = 10;
-			$scope.clients.sort(function (a,b) {
-				return a.name > b.name ? 1 : -1;
-			});
+			$scope.clients.sort(function (a,b) { return a.name > b.name ? 1 : -1; });
 			$scope.clients.toBeReversed = true;
 		});
 	});

@@ -28,7 +28,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		});
 });
 
-app.run(function ($rootScope, $location, services, ipCookie) {
+app.run(function ($rootScope, $location, ipCookie) {
 	$rootScope.$on("$stateChangeStart", function () {
 		if (!$rootScope.authenticated) {
 			var u = ipCookie("user");

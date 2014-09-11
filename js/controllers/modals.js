@@ -21,26 +21,14 @@ uiControllers.controller("clientListModalsController", function ($scope, $modal,
 	}
 });
 
-var clientDetailsModalInstanceController = function ($scope, $modalInstance, services, client) {
+var clientDetailsModalInstanceController = function ($scope, $modalInstance, client) {
 	$scope.isCollapsed = true;
 	$scope.client = client;
-	$scope.update = function () {
-		var data = {
-			client_id: $scope.client.id,
-			client_name: $scope.client.name,
-			client_description: $scope.client.description,
-			last_edited_by: $scope.currentUser.name,
-			last_edited_date: getTimestamp()
-		};
-		//services.updateClient(data).then(function (data) {
-		//	console.log("echoed data:", data);
-		//});
-	}
 	$scope.ok = function () { $modalInstance.close(); };
 	$scope.cancel = function () { $modalInstance.dismiss("cancel"); };
 };
 
-var clientEditModalInstanceController = function ($scope, $modalInstance, services, client, listIndex, listScope) {
+var clientEditModalInstanceController = function ($scope, $modalInstance, api, objects, client, listIndex, listScope) {
 	$scope.clientID = client.id;
 	$scope.clientName = client.name;
 	$scope.clientDescription = client.description;
@@ -72,7 +60,7 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, servic
 		};
 		data.sites = $scope.sites;
 		console.log("Sent data:", data);
-		services.updateClient(data).then(function (response) {
+		api.updateClient(data).then(function (response) {
 			console.log("Echoed data:", response);
 			if (response.config.data.client_id === data.client_id) {
 				listScope.clients[listIndex].name = data.client_name;
@@ -82,24 +70,6 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, servic
 			}
 		});
 	}
-	/*
-	$scope.update = function () {
-		var data = {
-			client_id: $scope.client.id,
-			client_name: $scope.client.name,
-			client_description: $scope.client.description,
-			last_edited_by: $scope.currentUser.name,
-			last_edited_date: getTimestamp()
-		};
-		console.log(data);
-		console.log($scope);
-		//services.updateClient(data).then(function (data) {
-		//	console.log("echoed data:", data);
-		//});
-	}
-	$scope.submit = function (form) {
-		console.log($scope.clientEditForm.clientID);
-	}*/
 	$scope.ok = function () { $modalInstance.close(); };
 	$scope.cancel = function () { $modalInstance.dismiss("cancel"); };
 };

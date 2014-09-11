@@ -1,11 +1,11 @@
-authControllers.controller("authenticationController", function ($state, $scope, $rootScope, services, ipCookie) {
+authControllers.controller("authenticationController", function ($state, $scope, $rootScope, api, ipCookie) {
 	$scope.isCollapsed = true;
 	$scope.login = function () {
 		$scope.message = {};
 		if ($scope.u && $scope.u.name && $scope.u.pass) {
 			var user = CryptoJS.SHA1($scope.u.name);
 			var pass = CryptoJS.SHA1($scope.u.pass);
-			services.loginUser(user,pass).then(function(data) {
+			api.loginUser(user,pass).then(function(data) {
 				var u = data.data[0];
 				if (u.admin_username) {
 					var currentUser = {
@@ -30,7 +30,7 @@ authControllers.controller("authenticationController", function ($state, $scope,
 	};
 });
 
-viewControllers.controller("loginController", function ($rootScope, $scope, $location, services, ipCookie) {
+viewControllers.controller("loginController", function ($rootScope, $scope, $location, ipCookie) {
 	$scope.logout = function () {
 		ipCookie.remove("user");
 		$rootScope.authenticated = false;

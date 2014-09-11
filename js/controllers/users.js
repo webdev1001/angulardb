@@ -1,5 +1,5 @@
-uiControllers.controller("userController", function ($scope, services) {
-	services.getUsers().then(function(data) {
+uiControllers.controller("userController", function ($scope, api) {
+	api.getUsers().then(function(data) {
 		$scope.users = data.data;
 		var i = $scope.users.length;
 		while (i--) {
