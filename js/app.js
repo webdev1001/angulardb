@@ -12,7 +12,6 @@ var app = angular.module("searchApp", [
 	"ui.bootstrap",
 	"ipCookie"
 ]);
-
 app.config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise("/");
 	$stateProvider
@@ -27,7 +26,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: "partials/login.php"
 		});
 });
-
 app.run(function ($rootScope, $location, ipCookie) {
 	$rootScope.$on("$stateChangeStart", function () {
 		if (!$rootScope.authenticated) {

@@ -3,9 +3,7 @@ uiControllers.controller("searchController", function ($scope, $filter) {
 	$scope.results = 0;
 	$scope.update = function () {
 		$scope.results++;
-		if ($scope.results === $scope.quantity) {
-			$scope.results = 0;
-		}
+		if ($scope.results === $scope.quantity) $scope.results = 0;
 	};
 	$scope.showMore = function (n) {
 		$scope.quantity += n;
@@ -95,7 +93,6 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 			$scope.results = 0;
 			$scope.quantity = 10;
 			$scope.increment = 10;
-			$scope.clients.sort(function (a,b) { return a.name > b.name ? 1 : -1; });
 			$scope.clients.toBeReversed = true;
 		});
 	});

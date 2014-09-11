@@ -19,19 +19,15 @@ html(class="no-js", lang="en", ng-app="searchApp")
 		//if lt IE 7
 			p.browsehappy!="ou are using an <strong>outdated</strong> browser. Please <a href='http://browsehappy.com/'>upgrade your browser</a> to improve your experience."
 		//[endif]
-
 		header
 			.row(ng-controller="loginController")
 				.col-md-10
 				.col-md-2(ng-if="authenticated")
 					button.btn.btn-primary(ng-click="logout()") Log Out ({{currentUser.name}})
-
 		div(ui-view)
-
 		.copyright.center-justify
 			img(src="img/hrwlogo1.png")
 			p(toggle-input) Copyright &copy; 2014 High Rank Websites, Inc.
-
 		script(src="bower_components/angular/angular.js")
 		script(src="bower_components/angular-route/angular-route.js")
 		script(src="bower_components/angular-cookie/angular-cookie.min.js")
