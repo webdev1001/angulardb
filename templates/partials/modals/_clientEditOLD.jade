@@ -1,0 +1,51 @@
+script(type="text/ng-template" id="clientEditModal.html")
+	form(name="$parent.clientEditForm" role="form" novalidate ng-submit="submit(clientEditForm)")
+		.modal-header
+			h2 #[i.glyphicon.glyphicon-list-alt] {{edit.name}}
+		.modal-body
+			.row
+				.col-md-12
+					h3 Client Details
+			.row.form-group(edit-client)
+				.col-md-6
+					label(for="editID") ID
+					input.form-control#editID(name="$parent.clientEditForm.clientID" value="{{edit.id}}" disabled="true")
+					label(for="editName") Name
+					input.form-control#editName(name="$parent.clientEditForm.clientName" value="{{edit.name}}")
+				.col-md-6
+					label(for="editDescription") Description
+					textarea.form-control.tall#editDescription(name="$parent.clientEditForm.clientDescription") {{edit.description}}
+			.row
+				.col-md-12
+					h3 Web Sites
+			.row(ng-if="edit.sites" ng-repeat="site in edit.sites")
+				.row
+					.col-md-12
+						h4 {{site.name}}
+				.row.form-group
+					.col-md-6
+						label(for="siteName") ID
+						input.form-control#siteID(name="site.id" value="{{site.id}}")
+						label(for="siteName") Name
+						input.form-control#siteName(name="site.name" value="{{site.name}}")
+					.col-md-6
+						label(for="siteName") URL
+						input.form-control#siteURL(name="site.url" value="{{site.url}}")
+				.row(ng-if="site.logins.types" ng-repeat="login in site.logins.types track by $index")
+					.col-md-2 {{login}}
+					.col-md-10
+						label(for="loginType") Type
+						input.form-control#loginType(name="login.type-{{site.id}}-{{$index}}" value="{{login}}")
+						label(for="loginConnection") Connection
+						input.form-control#loginConnection(name="login.connection" value="{{site.logins.connections[$index]}}")
+						label(for="loginUsername") Username
+						input.form-control#loginUsername(name="login.username" value="{{site.logins.usernames[$index]}}")
+						label(for="loginPassword") Password
+						input.form-control#loginPassword(name="login.password" value="{{site.logins.passwords[$index]}}")
+		.modal-footer
+			button.btn.btn-warning(type="submit") Submit
+			button.btn.btn-primary(ng-click="ok()") Nevermind
+			br
+			.row
+				.col-md-12.center-justify
+					img(src="img/hrwlogo1.png")

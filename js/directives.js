@@ -28,6 +28,7 @@ uiDirectives.directive("listAttributes", function() {
 			}
 		}
 		var obj = scope.client;
+		console.log(obj);
 		var sites = [];
 		var logins = [];
 		var result = {};
@@ -54,6 +55,7 @@ uiDirectives.directive("listAttributes", function() {
 		while (i--) {
 			var site = sites[i];
 			site.category = "site";
+			site["logins"] = {};
 			result["sites"][""+site.name+""] = site;
 			//element.parent().append("<h4>"+site.name+"</h4>");
 		}
@@ -63,3 +65,9 @@ uiDirectives.directive("listAttributes", function() {
 		scope.edit = result;
 	}
 })
+
+uiDirectives.directive("editClient", function() {
+	return function (scope) {
+		scope.edit = scope.client;
+	};
+});

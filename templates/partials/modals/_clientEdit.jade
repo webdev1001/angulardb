@@ -1,24 +1,51 @@
 script(type="text/ng-template" id="clientEditModal.html")
-	.modal-header
-		h2 #[i.glyphicon.glyphicon-list-alt] Edit {{edit.name}}
-	.modal-body
-		.row.center-justify(list-attributes)
-			.col-md-6
-				label(for="id") ID
-				input(name="id" value="{{edit.id}}")
-				label(for="name") Name
-				input(name="name" value="{{edit.name}}")
-			.col-md-6
-				label(for="description") Description
-				textarea(name="description") {{edit.description}}
-		.row.center-justify(ng-if="edit.sites" ng-repeat="site in edit.sites")
+	form(role="form" novalidate ng-submit="submit()")
+		.modal-header
+			h2 #[i.glyphicon.glyphicon-list-alt] {{client.name}}
+		.modal-body
 			.row
 				.col-md-12
-					h3 {{site.name}}
-	.modal-footer
-		button.btn.btn-warning(ng-click="update()") Submit
-		button.btn.btn-primary(ng-click="ok()") Nevermind
-		br
-		.row
-			.col-md-12.center-justify
-				img(src="img/hrwlogo1.png")
+					h3 Client Details
+			.row.form-group
+				.col-md-6
+					label(for="editID") ID
+					input.form-control#editID(ng-model="clientID")
+					label(for="editName") Name
+					input.form-control#editName(ng-model="clientName")
+				.col-md-6
+					label(for="editDescription") Description
+					textarea.form-control.tall#editDescription(ng-model="clientDescription") {{client.description}}
+			.row
+				.col-md-12
+					h3 Web Sites
+			.row(ng-if="client.sites" ng-repeat="site in client.sites track by $index")
+				.row
+					.col-md-12
+						h4 {{site.name}}
+				.row.form-group
+					.col-md-6
+						label(for="siteName") ID
+						input.form-control#siteID(ng-model="sites[$index].id" name="sites[$index].id")
+						label(for="siteName") Name
+						input.form-control#siteName(ng-model="sites[$index].name")
+					.col-md-6
+						label(for="siteName") URL
+						input.form-control#siteURL(ng-model="sites[$index].url")
+				.row(ng-if="site.logins.types" ng-repeat="login in site.logins.types track by $index")
+					.col-md-2 {{login}}
+					.col-md-10
+						label(for="loginType") Type [index: {{$index}}, parentIndex: {{$parent.$index}}]
+						input.form-control#loginType(ng-model="sites[$parent.$index].logins.types[$index]")
+						label(for="loginConnection") Connection [index: {{$index}}, parentIndex: {{$parent.$index}}]
+						input.form-control#loginConnection(ng-model="sites[$parent.$index].logins.connections[$index]")
+						label(for="loginUsername") Username
+						input.form-control#loginUsername(ng-model="sites[$parent.$index].logins.usernames[$index]")
+						label(for="loginPassword") Password
+						input.form-control#loginPassword(ng-model="sites[$parent.$index].logins.passwords[$index]")
+		.modal-footer
+			button.btn.btn-warning(type="submit") Submit
+			button.btn.btn-primary(ng-click="ok()") Nevermind
+			br
+			.row
+				.col-md-12.center-justify
+					img(src="img/hrwlogo1.png")

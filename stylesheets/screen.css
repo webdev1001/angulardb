@@ -269,6 +269,11 @@ select option:after, select option:before {
   padding-right: 5px;
 }
 
+/* line 45, ../sass/partials/_modals.scss */
+textarea.tall {
+  height: 200px;
+}
+
 /* line 1, ../sass/partials/_login.scss */
 .login-container {
   margin-top: 15%;

@@ -2,7 +2,7 @@ div(ng-repeat="client in clients | filter:q:strict | limitTo:quantity")
 	table.table.table-striped.table-hover.table-condensed.center.sites-table(ng-repeat="site in client.sites track by $index")
 		thead
 			tr
-				th {{client.name}} | {{site.name || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}}
+				th {{site.url || site.logins.usernames[0] + ":" + site.logins.passwords[0] + "@" + site.logins.connections[0] + ", etc. (" + site.logins.connections.length + " total)"}} | {{client.name}}
 		tbody
 			tr
 				td
