@@ -34,14 +34,14 @@ script(type="text/ng-template" id="clientEditModal.html")
 				.row(ng-if="site.logins.types" ng-repeat="login in site.logins.types track by $index")
 					.col-md-2 {{login}}
 					.col-md-10
-						label(for="loginType") Type [index: {{$index}}, parentIndex: {{$parent.$index}}]
-						input.form-control#loginType(ng-model="sites[$parent.$index].logins.types[$index]")
-						label(for="loginConnection") Connection [index: {{$index}}, parentIndex: {{$parent.$index}}]
-						input.form-control#loginConnection(ng-model="sites[$parent.$index].logins.connections[$index]")
+						label(for="loginType") Type
+						input.form-control#loginType(ng-model="sites[$parent.$parent.$index].logins.types[$index]")
+						label(for="loginConnection") Connection
+						input.form-control#loginConnection(ng-model="sites[$parent.$parent.$index].logins.connections[$index]")
 						label(for="loginUsername") Username
-						input.form-control#loginUsername(ng-model="sites[$parent.$index].logins.usernames[$index]")
+						input.form-control#loginUsername(ng-model="sites[$parent.$parent.$index].logins.usernames[$index]")
 						label(for="loginPassword") Password
-						input.form-control#loginPassword(ng-model="sites[$parent.$index].logins.passwords[$index]")
+						input.form-control#loginPassword(ng-model="sites[$parent.$parent.$index].logins.passwords[$index]")
 		.modal-footer
 			button.btn.btn-warning(type="submit") Submit
 			button.btn.btn-primary(ng-click="ok()") Nevermind

@@ -9,4 +9,4 @@ tmp
 *.sublime-project
 *.sublime-workspace
 *.zip
-img/*
+img/*.png

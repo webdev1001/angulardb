@@ -7,12 +7,16 @@ uiControllers.controller("clientListModalsController", function ($scope, $modal,
 			resolve: { client: function () { return client; } }
 		});
 	};
-	$scope.edit = function (client) {
+	$scope.edit = function (client, listIndex) {
 		var modalInstance = $modal.open({
 			templateUrl: "clientEditModal.html",
 			controller: clientEditModalInstanceController,
 			size: "lg",
-			resolve: { client: function () { return client; } }
+			resolve: {
+				client: function () { return client; },
+				listIndex: function () { return listIndex; },
+				listScope: function () { return $scope; }
+			}
 		});
 	}
 });
@@ -28,8 +32,6 @@ var clientDetailsModalInstanceController = function ($scope, $modalInstance, ser
 			last_edited_by: $scope.currentUser.name,
 			last_edited_date: getTimestamp()
 		};
-		//console.log(data);
-		//console.log($scope.clientEdit);
 		//services.updateClient(data).then(function (data) {
 		//	console.log("echoed data:", data);
 		//});
@@ -38,7 +40,7 @@ var clientDetailsModalInstanceController = function ($scope, $modalInstance, ser
 	$scope.cancel = function () { $modalInstance.dismiss("cancel"); };
 };
 
-var clientEditModalInstanceController = function ($scope, $modalInstance, services, client) {
+var clientEditModalInstanceController = function ($scope, $modalInstance, services, client, listIndex, listScope) {
 	$scope.clientID = client.id;
 	$scope.clientName = client.name;
 	$scope.clientDescription = client.description;
@@ -52,15 +54,6 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, servic
 		site.name = cSite.name;
 		site.url = cSite.url;
 		site.logins = cSite.logins;
-		/*var j = cSite.logins.types.length;
-		console.log(j);
-		while (j--) {
-			if (!$scope.sites[i].logins[j]) $scope.sites[i].logins[j] = {};
-			var login = $scope.sites[i].logins[j];
-			var cLogin = client.sites[i].logins[j];
-			login.type = cLogin.type;
-			$scope.sites[i].logins[j] = login;
-		}*/
 		$scope.sites[i] = site;
 	}
 	$scope.client = client;
@@ -68,6 +61,26 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, servic
 	function getTimestamp () {
 		var currentDate = new Date();
 		return currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+	}
+	$scope.submit = function () {
+		var data = {
+			client_id: $scope.clientID,
+			client_name: $scope.clientName,
+			client_description: $scope.clientDescription,
+			last_edited_by: $scope.currentUser.name,
+			last_edited_date: getTimestamp()
+		};
+		data.sites = $scope.sites;
+		console.log("Sent data:", data);
+		services.updateClient(data).then(function (response) {
+			console.log("Echoed data:", response);
+			if (response.config.data.client_id === data.client_id) {
+				listScope.clients[listIndex].name = data.client_name;
+				listScope.clients[listIndex].id = data.client_id;
+				listScope.clients[listIndex].description = data.client_description;
+				listScope.clients[listIndex].sites = data.sites;
+			}
+		});
 	}
 	/*
 	$scope.update = function () {

@@ -105,34 +105,39 @@ a:hover {
 }
 
 /* line 4, ../sass/partials/_search.scss */
+.spinner {
+  padding-top: 50px;
+}
+
+/* line 7, ../sass/partials/_search.scss */
 input.quantity {
   margin-top: 16px;
   display: inline;
   width: 10%;
 }
 
-/* line 9, ../sass/partials/_search.scss */
+/* line 12, ../sass/partials/_search.scss */
 select {
   display: inline-block !important;
   margin-top: 12px;
   margin-bottom: 12px;
 }
-/* line 13, ../sass/partials/_search.scss */
+/* line 16, ../sass/partials/_search.scss */
 select option:after, select option:before {
   content: " results";
 }
 
-/* line 17, ../sass/partials/_search.scss */
+/* line 20, ../sass/partials/_search.scss */
 .editor {
   text-align: center;
 }
 
-/* line 20, ../sass/partials/_search.scss */
+/* line 23, ../sass/partials/_search.scss */
 .search-container {
   width: 100%;
   height: 100%;
 }
-/* line 23, ../sass/partials/_search.scss */
+/* line 26, ../sass/partials/_search.scss */
 .search-container h1 {
   width: 100%;
   text-align: center;
@@ -140,37 +145,37 @@ select option:after, select option:before {
   margin-top: 50px;
 }
 
-/* line 30, ../sass/partials/_search.scss */
+/* line 33, ../sass/partials/_search.scss */
 .search {
   text-align: center;
   width: 50%;
   margin-left: 25%;
 }
-/* line 34, ../sass/partials/_search.scss */
+/* line 37, ../sass/partials/_search.scss */
 .search .results {
   margin-top: 5px;
   padding-bottom: 5px;
   border-bottom: thin solid #ccc;
 }
-/* line 39, ../sass/partials/_search.scss */
+/* line 42, ../sass/partials/_search.scss */
 .search .item {
   text-align: left;
 }
 
-/* line 43, ../sass/partials/_search.scss */
+/* line 46, ../sass/partials/_search.scss */
 .btn {
   margin: 1px;
 }
-/* line 45, ../sass/partials/_search.scss */
+/* line 48, ../sass/partials/_search.scss */
 .btn + .btn {
   margin-left: 1rem;
 }
 
-/* line 49, ../sass/partials/_search.scss */
+/* line 52, ../sass/partials/_search.scss */
 .dropdown-control {
   position: relative;
 }
-/* line 51, ../sass/partials/_search.scss */
+/* line 54, ../sass/partials/_search.scss */
 .dropdown-control + div {
   position: absolute;
   width: 50%;
@@ -183,7 +188,7 @@ select option:after, select option:before {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
-/* line 59, ../sass/partials/_search.scss */
+/* line 62, ../sass/partials/_search.scss */
 .dropdown-control + div p {
   color: white;
   padding: 1px 5px;
@@ -196,7 +201,7 @@ select option:after, select option:before {
   color: white;
   background-color: #4646FF;
 }
-/* line 68, ../sass/partials/_search.scss */
+/* line 71, ../sass/partials/_search.scss */
 .dropdown-control:hover + div {
   max-height: 9999;
   opacity: 1;

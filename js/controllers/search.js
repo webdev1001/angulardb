@@ -56,6 +56,7 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 			for (var i in $scope.logins) {
 				var l = $scope.logins[i];
 				if (l.l_login_types) {
+					l.l_login_ids = l.l_login_ids.split(",");
 					l.l_login_types = l.l_login_types.split(",");
 					l.l_login_connections = l.l_login_connections.split(",");
 					l.l_login_usernames = l.l_login_usernames.split(",");
@@ -97,6 +98,7 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 										url: c.w_website_urls[j],
 										logins: {
 											category: "login",
+											ids: l.l_login_ids,
 											types: l.l_login_types,
 											connections: l.l_login_connections,
 											usernames: l.l_login_usernames,

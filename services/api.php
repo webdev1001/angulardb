@@ -94,6 +94,7 @@
 				FROM website w
 				LEFT JOIN
 					(SELECT l.website_id AS l_website_id,
+						GROUP_CONCAT(l.login_id) AS l_login_ids,
 						GROUP_CONCAT(l.login_type) AS l_login_types,
 						GROUP_CONCAT(l.login_connection) AS l_login_connections,
 						GROUP_CONCAT(l.login_username) AS l_login_usernames,
@@ -139,6 +140,32 @@
 			$stmt->execute();
 			$this->mysqli->commit();
 			$stmt->close();
+			$i = count($request->sites);
+			while ($i--) {
+				$site = $request->sites->$i;
+				$stmt = $this->mysqli->prepare("UPDATE website SET website_name = ?,
+					website_url = ?
+					WHERE website_id = ?");
+				if ($stmt) {
+					$stmt->bind_param("ssi",
+						$name,
+						$url,
+						$id);
+					$name = $site->name;
+					$url = $site->url;
+					$id = $site->id;
+					$stmt->execute();
+					$this->mysqli->commit();
+					$stmt->close();
+				} else echo "FUCKKKK";
+			}
+			/*
+			$stmt = $this->mysqli->prepare("UPDATE website SET website_name = ?,
+				website_url = ?,
+				website_title = ?
+				WHERE website_id = ?");
+			*/
+
 		}
 	}
 
