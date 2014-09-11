@@ -45,7 +45,7 @@ uiControllers.controller("searchController", function ($scope, $filter) {
 	}
 });
 
-viewControllers.controller("searchViewController", function ($rootScope, $state, $scope, $http, services) {
+viewControllers.controller("searchViewController", function ($rootScope, $state, $scope, $http, services, objects, utilities) {
 	if (!$rootScope.authenticated) {
 		console.log("oops");
 		$state.go("login");
@@ -55,33 +55,18 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 			$scope.logins = logins.data;
 			for (var i in $scope.logins) {
 				var l = $scope.logins[i];
-				if (l.l_login_types) {
-					l.l_login_ids = l.l_login_ids.split(",");
-					l.l_login_types = l.l_login_types.split(",");
-					l.l_login_connections = l.l_login_connections.split(",");
-					l.l_login_usernames = l.l_login_usernames.split(",");
-					l.l_login_passwords = l.l_login_passwords.split(",");
-				}
+				l = utilities.explode(l,",");
 			}
 			$scope.clients = clients.data;
 			for (var i in $scope.clients) {
 				var c = $scope.clients[i];
-				var client = {
-					category: "client",
-					id: c.client_id,
-					name: c.client_name,
-					description: c.client_description,
-					date: {
-						created: c.creation_date,
-						edited: c.last_edited_date
-					},
-					author: {
-						first: c.created_by,
-						last: c.last_edited_by
-					},
-					sites: [],
-					messages: []
-				};
+				var client = new objects.Client(
+					c.client_id,
+					c.client_name,
+					c.client_description,
+					{ a: c.created_by, b: c.last_edited_by },
+					{ a: c.creation_date, b: c.last_edited_date }
+				);
 				if (c.w_client_id) {
 					c.w_website_names = c.w_website_names.split(",");
 					c.w_website_urls = c.w_website_urls.split(",");
@@ -91,20 +76,18 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 							for (var k in $scope.logins) {
 								var l = $scope.logins[k];
 								if (l.website_id === c.w_website_ids[j] && l.l_login_types) {
-									var site = {
-										category: "site",
-										id: l.website_id,
-										name: c.w_website_names[j],
-										url: c.w_website_urls[j],
-										logins: {
-											category: "login",
+									var site = new objects.Site(
+										l.website_id,
+										c.w_website_names[j],
+										c.w_website_urls[j],
+										{
 											ids: l.l_login_ids,
 											types: l.l_login_types,
 											connections: l.l_login_connections,
 											usernames: l.l_login_usernames,
 											passwords: l.l_login_passwords
 										}
-									};
+									);
 									client.sites.push(site);
 								}
 							}

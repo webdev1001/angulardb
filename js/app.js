@@ -4,6 +4,8 @@ var app = angular.module("searchApp", [
 	"uiControllers",
 	"authControllers",
 	"viewControllers",
+	"utlServices",
+	"objServices",
 	"apiServices",
 	"uiDirectives",
 	"ui.router",
