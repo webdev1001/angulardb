@@ -28,7 +28,7 @@ var clientDetailsModalInstanceController = function ($scope, $modalInstance, cli
 	$scope.cancel = function () { $modalInstance.dismiss("cancel"); };
 };
 
-var clientEditModalInstanceController = function ($scope, $modalInstance, api, objects, client, listIndex, listScope) {
+var clientEditModalInstanceController = function ($scope, $modalInstance, api, objects, utilities, client, listIndex, listScope) {
 	$scope.clientID = client.id;
 	$scope.clientName = client.name;
 	$scope.clientDescription = client.description;
@@ -46,17 +46,13 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, api, o
 	}
 	$scope.client = client;
 	console.log($scope.sites);
-	function getTimestamp () {
-		var currentDate = new Date();
-		return currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
-	}
 	$scope.submit = function () {
 		var data = {
 			client_id: $scope.clientID,
 			client_name: $scope.clientName,
 			client_description: $scope.clientDescription,
 			last_edited_by: $scope.currentUser.name,
-			last_edited_date: getTimestamp()
+			last_edited_date: utilities.getTimestamp()
 		};
 		data.sites = $scope.sites;
 		console.log("Sent data:", data);

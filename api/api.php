@@ -121,44 +121,68 @@
 		function updateClient() {
 			$postdata = file_get_contents("php://input");
 			$request = json_decode($postdata);
+			$msg_mysqli_fail = "Failed to initialize mysqli->prepare().";
+			$msg_db_fail = "DB table update unsuccessful: ";
+			$msg_db_success = "DB table update successful: ";
 			$stmt = $this->mysqli->prepare("UPDATE client SET client_name = ?,
 				client_description = ?,
 				last_edited_date = ?,
 				last_edited_by = ?
 				WHERE client_id = ?");
-			$stmt->bind_param("ssssi",
-				$name,
-				$desc,
-				$date,
-				$by,
-				$id);
-			$name = $request->client_name;
-			$desc = $request->client_description;
-			$date = $request->last_edited_date;
-			$by = $request->last_edited_by;
-			$id = $request->client_id;
-			$stmt->execute();
-			$this->mysqli->commit();
-			$stmt->close();
+			if ($stmt) {
+				$stmt->bind_param("ssssi", $name, $desc, $date, $by, $id);
+				$name = $request->client_name;
+				$desc = $request->client_description;
+				$date = $request->last_edited_date;
+				$by = $request->last_edited_by;
+				$id = $request->client_id;
+				if ($stmt->execute()) echo $msg_db_success . "client (id: ".$id." ). ";
+				else echo $msg_db_fail . "client. ";
+				$this->mysqli->commit();
+				$stmt->close();
+			} else echo $msg_mysqli_fail;
 			$i = count($request->sites);
-			while ($i--) {
-				$site = $request->sites->$i;
+			if ($i) {
 				$stmt = $this->mysqli->prepare("UPDATE website SET website_name = ?,
 					website_url = ?
 					WHERE website_id = ?");
-				if ($stmt) {
-					$stmt->bind_param("ssi",
-						$name,
-						$url,
-						$id);
+			}
+			if ($stmt) {
+				$stmt->bind_param("ssi", $name, $url, $id);
+				while ($i--) {
+					$site = $request->sites->$i;
+					$stmt->bind_param("ssi", $name, $url, $id);
 					$name = $site->name;
 					$url = $site->url;
 					$id = $site->id;
-					$stmt->execute();
+					if ($stmt->execute()) echo $msg_db_success . "website (id: ".$id." ). ";
+					else echo $msg_db_fail . "website. ";
 					$this->mysqli->commit();
 					$stmt->close();
-				} else echo "FUCKKKK";
-			}
+					$login = $site->logins;
+					$j = count($login->types);
+					if ($j) {
+						$stmt = $this->mysqli->prepare("UPDATE login SET login_type = ?,
+							login_connection = ?,
+							login_username = ?,
+							login_password = ?
+							WHERE login_id = ?");
+					}
+					if ($stmt) {
+						$stmt->bind_param("ssssi", $type, $connection, $username, $password, $id);
+						while ($j--) {
+							$type = $login->types[$j];
+							$connection = $login->connections[$j];
+							$username = $login->usernames[$j];
+							$password = $login->passwords[$j];
+							$id = $login->ids[$j];
+							if ($stmt->execute()) echo $msg_db_success . "login (id: ".$id." ). ";
+							else echo $msg_db_fail . "login. ";
+						}
+						$stmt->close();
+					} else echo $msg_mysqli_fail;
+				}
+			} else echo $msg_mysqli_fail;
 			/*
 			$stmt = $this->mysqli->prepare("UPDATE website SET website_name = ?,
 				website_url = ?,

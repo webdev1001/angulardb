@@ -8,5 +8,9 @@ utlServices.factory("utilities", [function() {
 		}
 		return o;
 	}
+	obj.getTimestamp = function () {
+		var currentDate = new Date();
+		return currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+	}
 	return obj;
 }]);
