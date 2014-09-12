@@ -36,12 +36,6 @@ uiControllers.controller("clientListModalsController", function ($scope, $modal,
 		}).result.catch(function (result) {
 			$scope.client = $scope.buffer;
 			$scope.$parent.client = $scope.buffer;
-			/*console.log("---");
-			console.log("client: ", client);
-			console.log("scope.buffer: ", $scope.buffer);
-			console.log("scope.client: ", $scope.client);
-			console.log("scope.parent.client: ", $scope.$parent.client);
-			console.log("---");*/
 		});
 	}
 });
