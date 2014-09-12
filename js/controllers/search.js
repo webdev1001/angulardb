@@ -55,7 +55,6 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 			$scope.clients = clients.data;
 			for (var i in $scope.clients) {
 				var c = $scope.clients[i];
-				if (c.client_id == "3" || c.client_id == 3) console.log(c);
 				var client = new objects.Client(
 					c.client_id,
 					c.client_name,

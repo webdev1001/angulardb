@@ -1,7 +1,10 @@
 script(type="text/ng-template" id="clientEditModal.html")
-	form(role="form" novalidate ng-submit="submit()")
+	form(role="form" novalidate)
 		.modal-header
 			h2 #[i.glyphicon.glyphicon-list-alt] {{client.name}}
+			p.center-justify(ng-if="message.text" class="alert alert-{{message.type}}") {{message.text}}
+			button.btn.btn-warning(type="submit" ng-click="submit()") Submit Changes
+			button.btn.btn-primary(ng-click="ok()") Done
 		.modal-body
 			.row
 				.col-md-12
@@ -9,23 +12,23 @@ script(type="text/ng-template" id="clientEditModal.html")
 			.row.form-group
 				.col-md-6
 					label(for="editID") ID
-					input.form-control#editID(ng-model="clientID")
+					input.form-control#editID(ng-model="client.id")
 					label(for="editName") Name
-					input.form-control#editName(ng-model="clientName")
+					input.form-control#editName(ng-model="client.name")
 				.col-md-6
 					label(for="editDescription") Description
-					textarea.form-control.tall#editDescription(ng-model="clientDescription") {{client.description}}
+					textarea.form-control.tall#editDescription(ng-model="client.description")
 			.row
 				.col-md-12
 					h3 Web Sites
 			.row(ng-if="client.sites" ng-repeat="site in client.sites track by $index")
 				.row
 					.col-md-12
-						h4 {{site.name}}
+						h4 {{sites[$index].name}}
 				.row.form-group
 					.col-md-6
 						label(for="siteName") ID
-						input.form-control#siteID(ng-model="sites[$index].id" name="sites[$index].id")
+						input.form-control#siteID(ng-model="sites[$index].id")
 						label(for="siteName") Name
 						input.form-control#siteName(ng-model="sites[$index].name")
 					.col-md-6
@@ -43,8 +46,9 @@ script(type="text/ng-template" id="clientEditModal.html")
 						label(for="loginPassword") Password
 						input.form-control#loginPassword(ng-model="sites[$parent.$parent.$index].logins.passwords[$index]")
 		.modal-footer
-			button.btn.btn-warning(type="submit") Submit
-			button.btn.btn-primary(ng-click="ok()") Nevermind
+			p.center-justify(ng-if="message.text" class="alert alert-{{message.type}}") {{message.text}}
+			button.btn.btn-warning(type="submit" ng-click="submit()") Submit Changes
+			button.btn.btn-primary(ng-click="ok()") Done
 			br
 			.row
 				.col-md-12.center-justify

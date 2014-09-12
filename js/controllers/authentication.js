@@ -7,6 +7,7 @@ authControllers.controller("authenticationController", function ($state, $scope,
 			var pass = CryptoJS.SHA1($scope.u.pass);
 			api.loginUser(user,pass).then(function(data) {
 				var u = data.data[0];
+				console.log(data.data);
 				if (u.admin_username) {
 					var currentUser = {
 						name: u.admin_username,

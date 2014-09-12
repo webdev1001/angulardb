@@ -60,21 +60,26 @@
 		}
 
 		// API Functions
-		private function loginUser() {
-			$user = $_GET["user"];
-			$pass = $_GET["pass"];
+		private function authenticateUser($user, $pass) {
 			if ($this->checkSha1($user) && $this->checkSha1($pass)) {
 				$query = "SELECT u.* FROM admin u WHERE SHA1(BINARY u.admin_username)='".$user."'";
 				$result = $this->getUnParsedQuery($query);
 				if ($result) {
 					$stored_pass = $result[0]["admin_password"];
-					if ($pass == $stored_pass) $this->response($this->jsonify($result), 200);
+					if ($pass == $stored_pass) return $result;
 					echo "Error: Password does not match.";
 					return null;
 				}
 			}
+		}
+		private function loginUser() {
+			$user = $_GET["user"];
+			$pass = $_GET["pass"];
+			$result = $this->authenticateUser($user, $pass) or die(" Failed to login.");
+			if ($result)
+				$this->response($this->jsonify($result), 200);
 			echo "Error: Incorrect parameters." . $_SERVER["REQUEST_URI"];
-			return null;
+			return false;
 		}
 		private function getUsers() {
 			$this->check_request_method();
@@ -131,11 +136,11 @@
 				WHERE client_id = ?");
 			if ($stmt) {
 				$stmt->bind_param("ssssi", $name, $desc, $date, $by, $id);
-				$name = $request->client_name;
-				$desc = $request->client_description;
+				$name = $request->name;
+				$desc = $request->description;
 				$date = $request->last_edited_date;
 				$by = $request->last_edited_by;
-				$id = $request->client_id;
+				$id = $request->id;
 				if ($stmt->execute()) echo $msg_db_success . "client (id: ".$id." ). ";
 				else echo $msg_db_fail . "client. ";
 				$this->mysqli->commit();
@@ -146,11 +151,11 @@
 				$stmt = $this->mysqli->prepare("UPDATE website SET website_name = ?,
 					website_url = ?
 					WHERE website_id = ?");
-			}
+			} else $stmt = null;
 			if ($stmt) {
 				$stmt->bind_param("ssi", $name, $url, $id);
 				while ($i--) {
-					$site = $request->sites->$i;
+					$site = $request->sites["".$i.""];
 					$stmt->bind_param("ssi", $name, $url, $id);
 					$name = $site->name;
 					$url = $site->url;
@@ -167,7 +172,7 @@
 							login_username = ?,
 							login_password = ?
 							WHERE login_id = ?");
-					}
+					} else $stmt = null;
 					if ($stmt) {
 						$stmt->bind_param("ssssi", $type, $connection, $username, $password, $id);
 						while ($j--) {
@@ -183,13 +188,6 @@
 					} else echo $msg_mysqli_fail;
 				}
 			} else echo $msg_mysqli_fail;
-			/*
-			$stmt = $this->mysqli->prepare("UPDATE website SET website_name = ?,
-				website_url = ?,
-				website_title = ?
-				WHERE website_id = ?");
-			*/
-
 		}
 	}
 
