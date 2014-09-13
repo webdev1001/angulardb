@@ -1,3 +1,23 @@
+/**
+This file is part of angulardb, a web design and SEO marketing
+database front- and back-end application.
+Copyright (C) 2014  Aaron John Schlosser
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 var uiDirectives = angular.module("uiDirectives", []);
 
 uiDirectives.directive("toggleInput", function() {
@@ -8,66 +28,8 @@ uiDirectives.directive("toggleInput", function() {
 				e.innerHTML = "<input type='text' value='"+e.innerText+"' style='width:100%''>";
 				e.getElementsByTagName("input")[0].select();
 			} else if (e.tagName === "INPUT") {
-				e.parentNode.innerHTML = e.value; //e.getAttribute("value");
+				e.parentNode.innerHTML = e.value;
 			}
 		});
-	};
-});
-
-uiDirectives.directive("listAttributes", function() {
-	return function (scope, element, attr) {
-		function iterateOverNestedObject (obj) {
-			var category = obj["category"];
-			if (category === "site") sites.push(obj);
-			else if (category === "login") logins.push(obj);
-			for (var prop in obj) {
-				var value = obj[prop];
-				if (typeof value === "object") {
-					iterateOverNestedObject(value);
-				}
-			}
-		}
-		var obj = scope.client;
-		console.log(obj);
-		var sites = [];
-		var logins = [];
-		var result = {};
-		result["sites"] = {};
-		for (var prop in obj) {
-			if (prop !== "category" && prop !== "$$hashKey") {
-				var value = obj[prop];
-				if (typeof value === "object") {
-					iterateOverNestedObject(value);
-				} else {
-					if (typeof value === "string") {
-						//var label = "<label class='listed-attribute-input-label' for='"+prop+"'>"+prop.charAt(0).toUpperCase()+prop.slice(1)+"</label>";
-						//var input = "<input class='listed-attribute-input' type='text' name='"+prop+"' value='"+value+"'>";
-						//if (prop === "description") input = "<textarea class='listed-attribute-input'name='"+prop+"'>" + value + "</textarea>";
-						//element.parent().append(label);
-						//element.parent().append(input);
-						result[""+prop+""] = value;
-					}
-				}
-			}
-		}
-		//element.parent().append("<hr>");
-		i = sites.length;
-		while (i--) {
-			var site = sites[i];
-			site.category = "site";
-			site["logins"] = {};
-			result["sites"][""+site.name+""] = site;
-			//element.parent().append("<h4>"+site.name+"</h4>");
-		}
-		console.log("Result: ", result);
-		console.log("Sites: ", sites.length);
-		console.log("Logins: ", logins.length);
-		scope.edit = result;
-	}
-})
-
-uiDirectives.directive("editClient", function() {
-	return function (scope) {
-		scope.edit = scope.client;
 	};
 });

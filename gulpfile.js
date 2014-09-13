@@ -6,8 +6,6 @@
 */
 
 var gulp 				= require("gulp"),
-	gutil 				= require("gulp-util"),
-	concat				= require("gulp-concat"),
 	watch 				= require("gulp-watch"),
 	compass 			= require("gulp-compass"),
 	plumber				= require("gulp-plumber"),
