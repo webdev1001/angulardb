@@ -153,7 +153,6 @@
 					WHERE website_id = ?");
 			} else $stmt = null;
 			if ($stmt) {
-				$stmt->bind_param("ssi", $name, $url, $id);
 				while ($i--) {
 					$site = $request->sites["".$i.""];
 					$stmt->bind_param("ssi", $name, $url, $id);
@@ -163,7 +162,6 @@
 					if ($stmt->execute()) echo $msg_db_success . "website (id: ".$id." ). ";
 					else echo $msg_db_fail . "website. ";
 					$this->mysqli->commit();
-					$stmt->close();
 					$login = $site->logins;
 					$j = count($login->types);
 					if ($j) {
@@ -184,10 +182,10 @@
 							if ($stmt->execute()) echo $msg_db_success . "login (id: ".$id." ). ";
 							else echo $msg_db_fail . "login. ";
 						}
-						$stmt->close();
 					} else echo $msg_mysqli_fail;
 				}
 			} else echo $msg_mysqli_fail;
+			$stmt->close();
 		}
 	}
 
