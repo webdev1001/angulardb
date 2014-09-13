@@ -39,6 +39,7 @@ uiControllers.controller("clientListModalsController", function ($scope, $modal,
 	$scope.edit = function (client) {
 		$scope.buffer = new objects.Client();
 		$scope.buffer.clone(client);
+		console.log("Editing: ", $scope.buffer.sites);
 		var modalInstance = $modal.open({
 			templateUrl: "clientEditModal.html",
 			controller: clientEditModalInstanceController,
@@ -54,8 +55,9 @@ uiControllers.controller("clientListModalsController", function ($scope, $modal,
 				}
 			}
 		}).result.catch(function (result) {
-			$scope.client = $scope.buffer;
 			$scope.$parent.client = $scope.buffer;
+			$scope.$parent.sites = $scope.buffer.sites;
+			console.log("Did not edit: ", $scope.buffer.sites);
 		});
 	}
 });
@@ -82,7 +84,9 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, api, o
 			site.logins = cSite.logins;
 			$scope.sites[i] = site;
 		}
-		if (!changed) $scope.client = client;
+		if (!changed) {
+			$scope.client = client;
+		}
 		else $scope.client = updatedClient;
 	}
 	$scope.submit = function () {

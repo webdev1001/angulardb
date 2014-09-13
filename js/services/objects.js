@@ -47,7 +47,12 @@ objServices.factory("objects", [function(){
 				created: client.dates.created,
 				modified: client.dates.modified
 			};
-			this.sites = client.sites;
+			var i = client.sites.length;
+			while (i--) {
+				this.sites[i] = new obj.Site();
+				console.log("Gonna clone: ", client.sites[i]);
+				this.sites[i].clone(client.sites[i]);
+			}
 			this.messages = client.messages;
 			this.category = client.category;
 		}
@@ -66,6 +71,22 @@ objServices.factory("objects", [function(){
 		};
 		this.category = category ? category : "site";
 	}
+	obj.Site.prototype.clone = function (site) {
+		this.id = site.id;
+		this.name = site.name;
+		this.url = site.url;
+		this.logins = site.logins; // same here....
+		var i = site.logins.types.length;
+		while (i--) {
+			this.logins.types[i] = site.logins.types[i];
+			this.logins.ids[i] = site.logins.ids[i];
+			this.logins.connections[i] = site.logins.connections[i];
+			this.logins.usernames[i] = site.logins.usernames[i];
+			this.logins.passwords[i] = site.logins.passwords[i];
+		}
+		this.category = site.category;
+		console.log("Cloned: ", this);
+	};
 	obj.User = function (name, names, email, phone, title) {
 		this.name = name ? name : "";
 		this.names = names ? names : {
