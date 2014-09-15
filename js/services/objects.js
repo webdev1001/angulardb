@@ -35,27 +35,26 @@ objServices.factory("objects", [function(){
 		this.sites = sites ? sites : [];
 		this.messages = messages ? messages : [];
 		this.category = category ? category : "client";
-		this.clone = function (client) {
-			this.id = client.id;
-			this.name = client.name;
-			this.description = client.description;
-			this.authors = {
-				first: client.authors.first,
-				last: client.authors.last
-			};
-			this.dates = {
-				created: client.dates.created,
-				modified: client.dates.modified
-			};
-			var i = client.sites.length;
-			while (i--) {
-				this.sites[i] = new obj.Site();
-				console.log("Gonna clone: ", client.sites[i]);
-				this.sites[i].clone(client.sites[i]);
-			}
-			this.messages = client.messages;
-			this.category = client.category;
+	}
+	obj.Client.prototype.clone = function (client) {
+		this.id = client.id;
+		this.name = client.name;
+		this.description = client.description;
+		this.authors = {
+			first: client.authors.first,
+			last: client.authors.last
+		};
+		this.dates = {
+			created: client.dates.created,
+			modified: client.dates.modified
+		};
+		var i = client.sites.length;
+		while (i--) {
+			this.sites[i] = new obj.Site();
+			this.sites[i].clone(client.sites[i]);
 		}
+		this.messages = client.messages;
+		this.category = client.category;
 	}
 	obj.Site = function (id, name, url, logins, category) {
 		this.id = id ? id : -1;
@@ -75,7 +74,6 @@ objServices.factory("objects", [function(){
 		this.id = site.id;
 		this.name = site.name;
 		this.url = site.url;
-		this.logins = site.logins; // same here....
 		var i = site.logins.types.length;
 		while (i--) {
 			this.logins.types[i] = site.logins.types[i];
@@ -85,9 +83,9 @@ objServices.factory("objects", [function(){
 			this.logins.passwords[i] = site.logins.passwords[i];
 		}
 		this.category = site.category;
-		console.log("Cloned: ", this);
 	};
-	obj.User = function (name, names, email, phone, title) {
+	obj.User = function (id, name, names, email, phone, title, level, pic) {
+		this.id = id ? id : -1;
 		this.name = name ? name : "";
 		this.names = names ? names : {
 			first: "",
@@ -96,6 +94,8 @@ objServices.factory("objects", [function(){
 		this.email = email ? email : "";
 		this.phone = phone ? phone : "";
 		this.title = title ? title : "";
+		this.pic = pic ? pic : "";
+		this.level = level ? level : "guest";
 	}
 	return obj;
 }]);

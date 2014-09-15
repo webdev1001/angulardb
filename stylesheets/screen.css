@@ -78,13 +78,24 @@
   cursor: default !important;
 }
 
-/* line 46, ../sass/partials/_var.scss */
+/* line 45, ../sass/partials/_var.scss */
+.spinner-small {
+  width: 16px;
+  height: 16px;
+}
+
+/* line 50, ../sass/partials/_var.scss */
+.inline-block {
+  display: inline-block;
+}
+
+/* line 55, ../sass/partials/_var.scss */
 em {
   color: red;
   font-style: normal;
 }
 
-/* line 50, ../sass/partials/_var.scss */
+/* line 59, ../sass/partials/_var.scss */
 a {
   text-decoration: none;
   color: black;
@@ -93,7 +104,7 @@ a {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
-/* line 54, ../sass/partials/_var.scss */
+/* line 63, ../sass/partials/_var.scss */
 a:hover {
   color: gray;
   text-decoration: none;

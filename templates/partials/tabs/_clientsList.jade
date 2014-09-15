@@ -15,7 +15,7 @@ table.table.table-hover.table-condensed.center
 			td.col-md-2
 				.right(ng-controller="clientListModalsController")
 					.btn-group(tooltip="Edit or view the details of {{client.name}}'s account." tooltip-placement="left")
-						button.btn.btn-primary(ng-click="edit(client)") #[i.glyphicon.glyphicon-edit]&nbsp;
+						button.btn.btn-primary(ng-if="currentUser.level == 'admin'" ng-click="edit(client)") #[i.glyphicon.glyphicon-edit]&nbsp;
 						button.btn.btn-primary(ng-click="view(client)") #[i.glyphicon.glyphicon-search]&nbsp;
 						include ../modals/_clientDetails.jade
 						include ../modals/_clientEdit.jade

@@ -2,9 +2,10 @@ script(type="text/ng-template" id="clientEditModal.html")
 	form(role="form" novalidate)
 		.modal-header
 			h2 #[i.glyphicon.glyphicon-list-alt] {{client.name}}
-			p.center-justify(ng-if="message.text" class="alert alert-{{message.type}}") {{message.text}}
 			button.btn.btn-warning(type="submit" ng-click="submit()") Submit Changes
 			button.btn.btn-primary(ng-click="ok()") Done
+			img.spinner-small.inline-block(ng-if="status.loaded == false" src="img/spinner.gif")
+			span(ng-if="status.text"): i.glyphicon.glyphicon-ok
 		.modal-body
 			.row
 				.col-md-12
@@ -46,7 +47,8 @@ script(type="text/ng-template" id="clientEditModal.html")
 						label(for="loginPassword") Password
 						input.form-control#loginPassword(ng-model="sites[$parent.$parent.$index].logins.passwords[$index]")
 		.modal-footer
-			p.center-justify(ng-if="message.text" class="alert alert-{{message.type}}") {{message.text}}
+			img.spinner-small.inline-block(ng-if="status.loaded == false" src="img/spinner.gif")
+			span(ng-if="status.text"): i.glyphicon.glyphicon-ok
 			button.btn.btn-warning(type="submit" ng-click="submit()") Submit Changes
 			button.btn.btn-primary(ng-click="ok()") Done
 			br

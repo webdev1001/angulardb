@@ -29,9 +29,6 @@ uiControllers.controller("clientListModalsController", function ($scope, $modal,
 					var clientClone = new objects.Client();
 					clientClone = JSON.parse(JSON.stringify(client));
 					return clientClone;
-				},
-				updatedClient: function () {
-					return client;
 				}
 			}
 		});
@@ -39,26 +36,12 @@ uiControllers.controller("clientListModalsController", function ($scope, $modal,
 	$scope.edit = function (client) {
 		$scope.buffer = new objects.Client();
 		$scope.buffer.clone(client);
-		console.log("Editing: ", $scope.buffer.sites);
 		var modalInstance = $modal.open({
 			templateUrl: "clientEditModal.html",
 			controller: clientEditModalInstanceController,
 			size: "lg",
-			resolve: {
-				client: function () {
-					return client;
-				},
-				updatedClient: function () {
-					var updatedClient = new objects.Client();
-					updatedClient = client;
-					return updatedClient;
-				}
-			}
-		}).result.catch(function (result) {
-			$scope.$parent.client = $scope.buffer;
-			$scope.$parent.sites = $scope.buffer.sites;
-			console.log("Did not edit: ", $scope.buffer.sites);
-		});
+			resolve: { client: function () { return client; } }
+		}).result.catch(function (result) { $scope.$parent.client = $scope.buffer; });
 	}
 });
 
@@ -69,7 +52,7 @@ var clientDetailsModalInstanceController = function ($scope, $modalInstance, cli
 	$scope.cancel = function () { $modalInstance.dismiss("cancel"); };
 };
 
-var clientEditModalInstanceController = function ($scope, $modalInstance, api, objects, utilities, client, updatedClient) {
+var clientEditModalInstanceController = function ($scope, $modalInstance, api, objects, utilities, client) {
 	$scope.refresh = function (client, changed) {
 		changed = changed ? changed : false;
 		var i = client.sites.length;
@@ -84,36 +67,32 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, api, o
 			site.logins = cSite.logins;
 			$scope.sites[i] = site;
 		}
-		if (!changed) {
-			$scope.client = client;
-		}
-		else $scope.client = updatedClient;
+		if (!changed) $scope.client = client;
 	}
 	$scope.submit = function () {
-		data = client;
-		data.last_edited_by = $scope.currentUser.name;
-		data.last_edited_date = utilities.getTimestamp();
-		data.sites = $scope.sites;
-		$scope.message = {
+		client.last_edited_by = $scope.currentUser.name;
+		client.last_edited_date = utilities.getTimestamp();
+		client.sites = $scope.sites;
+		$scope.status = {
 			text: "Please wait while changes are submitted...",
-			type: "info"
+			type: "info",
+			loaded: false
 		};
-		api.updateClient(data).then(function (response) {
+		api.updateClient(client).then(function (response) {
 			if (response.data.indexOf("Warning") == -1 || response.data.indexOf("unsuccessful") === -1) {
-				client = data;
-				updatedClient = data;
-				$scope.client = data;
-				//$scope.clients = data;
-				$scope.sites = data.sites;
-				$scope.refresh(data, true);
-				$scope.message = {
+				$scope.client = client;
+				$scope.sites = client.sites;
+				$scope.refresh(client, true);
+				$scope.status = {
 					text: "Done!",
-					type: "success"
+					type: "success",
+					loaded: true
 				};
 			} else {
-				$scope.message = {
+				$scope.status = {
 					text: "Oops. There was a problem: " + response.data,
-					type: "danger"
+					type: "danger",
+					loaded: false
 				}
 			}
 		});

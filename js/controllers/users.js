@@ -25,11 +25,13 @@ uiControllers.controller("userController", function ($scope, api, objects) {
 		while (i--) {
 			var u = $scope.users[i];
 			var user = new objects.User(
+				u.admin_id,
 				u.admin_username,
 				{ first: u.admin_firstname, last: u.admin_lastname },
 				u.admin_email,
 				u.admin_phone,
-				u.admin_title
+				u.admin_title,
+				u.admin_accesslevel
 			);
 			$scope.users[i] = user;
 		}

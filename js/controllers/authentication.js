@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-authControllers.controller("authenticationController", function ($state, $scope, $rootScope, api, ipCookie) {
+authControllers.controller("authenticationController", function ($state, $scope, $rootScope, api, objects, ipCookie) {
 	$scope.isCollapsed = true;
 	$scope.login = function () {
 		$scope.message = {};
@@ -29,12 +29,16 @@ authControllers.controller("authenticationController", function ($state, $scope,
 				var u = data.data[0];
 				console.log(data.data);
 				if (u.admin_username) {
-					var currentUser = {
-						name: u.admin_username,
-						pass: u.admin_password,
-						email: u.admin_email,
-						authenticated: true
-					};
+					var currentUser = new objects.User(
+						u.admin_id,
+						u.admin_username,
+						{ first: u.admin_firstname, last: u.admin_lastname },
+						u.admin_email,
+						u.admin_phone,
+						u.admin_title,
+						u.admin_accesslevel
+					);
+					currentUser.authenticated = true;
 					$rootScope.currentUser = currentUser;
 					$rootScope.authenticated = true;
 					ipCookie("user", currentUser);
