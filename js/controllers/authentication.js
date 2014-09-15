@@ -36,9 +36,9 @@ authControllers.controller("authenticationController", function ($state, $scope,
 						u.admin_email,
 						u.admin_phone,
 						u.admin_title,
-						u.admin_accesslevel
+						u.admin_accesslevel,
+						true
 					);
-					currentUser.authenticated = true;
 					$rootScope.currentUser = currentUser;
 					$rootScope.authenticated = true;
 					ipCookie("user", currentUser);

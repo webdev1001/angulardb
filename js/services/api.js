@@ -36,5 +36,8 @@ apiServices.factory("api", ["$http", function($http) {
 	obj.getUsers = function() {
 		return $http.get(path + "getUsers");
 	};
+	obj.checkUser = function(user) {
+		return $http.get(path + "checkUser?user=" + user);
+	};
 	return obj;	 
 }]);

@@ -10,15 +10,15 @@
 					label show
 					| &nbsp;
 					input.form-control.quantity(type="number" min="1" value="{{quantity}}" ng-model="quantity" ng-maxlength="4")
-					| &nbsp;results
+					| &nbsp;results | has admin access: {{currentUser.hasAccess("admin")}} | {{currentUser.level}}
 				tabset
-					tab(heading="clients")
+					tab(heading="clients" ng-if="currentUser.hasAccess('dev')")
 						include tabs/_clientsList.jade
-					tab(heading="web sites")
+					tab(heading="web sites" ng-if="currentUser.hasAccess('dev')")
 						include tabs/_webSitesList.jade
-					tab(heading="logins")
+					tab(heading="logins" ng-if="currentUser.hasAccess('dev')")
 						include tabs/_loginsList.jade
-					tab(heading="people")
+					tab(heading="people" ng-if="currentUser.hasAccess('user')")
 						include tabs/_peopleList.jade
 				.row.center-justify
 					button.btn.btn-primary(ng-if="results < clients.length" ng-click="showMore(quantity)") show {{quantity}} more

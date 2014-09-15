@@ -84,7 +84,9 @@ objServices.factory("objects", [function(){
 		}
 		this.category = site.category;
 	};
-	obj.User = function (id, name, names, email, phone, title, level, pic) {
+	obj.User = function (id, name, names, email, phone, title, level, authenticated, pic) {
+		this.authenticated = authenticated ? authenticated : false;
+		this.level = level ? level : "guest";
 		this.id = id ? id : -1;
 		this.name = name ? name : "";
 		this.names = names ? names : {
@@ -95,7 +97,28 @@ objServices.factory("objects", [function(){
 		this.phone = phone ? phone : "";
 		this.title = title ? title : "";
 		this.pic = pic ? pic : "";
-		this.level = level ? level : "guest";
+		this.authenticate = function () { return this.authenticated; }
+	}
+	obj.User.prototype.copy = function (user) {
+		this.level = user.level;
+		this.id = user.id;
+		this.name = user.name;
+		this.names = {
+			first: user.names.first,
+			last: user.names.last
+		};
+		this.email = user.email;
+		this.phone = user.phone;
+		this.title = user.title;
+		this.pic = user.pic;
+		this.authenticated = user.authenticated;
+	}
+	obj.User.prototype.hasAccess = function (accessLevel) {
+		var levels = ["guest", "user", "dev", "admin"];
+		if (levels.indexOf(this.level) != -1) {
+			if (levels.indexOf(this.level) >= levels.indexOf(accessLevel)) return true;
+		}
+		return false;
 	}
 	return obj;
 }]);

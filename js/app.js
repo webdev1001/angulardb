@@ -46,12 +46,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: "partials/login.php"
 		});
 });
-app.run(function ($rootScope, $location, ipCookie) {
+app.run(function ($rootScope, $location, objects, ipCookie) {
 	$rootScope.$on("$stateChangeStart", function () {
 		if (!$rootScope.authenticated) {
-			var u = ipCookie("user");
-			if (u) {
+			var cookie = ipCookie("user");
+			if (cookie) {
 				$rootScope.authenticated = true;
+				var u = new objects.User();
+				u.copy(cookie);
 				$rootScope.currentUser = u;
 			}
 			else $location.path("login");
