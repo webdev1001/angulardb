@@ -2,7 +2,7 @@
 	img(src="img/spinner.gif" alt="initializing...")
 .search-container(ng-if="clients" )
 	.search-container-inner
-		h1(ng-if="q.$") #[i.glyphicon.glyphicon-search]
+		h1(ng-if="q.$") #[i.glyphicon.glyphicon-search] beta
 		input#search(type="search" ng-model="q.$" value="" placeholder="start typing..." ng-style="q.$ && {'margin-top': '3%'} || !q.$ && {'margin-top': '20%'}" autofocus).search.form-control
 		.row.three-fourths.center(ng-if="q.$")
 			.results-container(ng-controller="searchController")
