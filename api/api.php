@@ -102,6 +102,18 @@
 			echo "Error: Incorrect parameters." . $_SERVER["REQUEST_URI"];
 			return false;
 		}
+		private function checkUser() {
+			$user = $_GET["user"];
+			$query = "SELECT u.admin_firstname,
+				u.admin_lastname,
+				u.admin_username,
+				u.admin_email,
+				u.admin_phone,
+				u.admin_title,
+				u.admin_accesslevel FROM admin u
+				WHERE u.admin_username = '".$user."'";
+			$this->parseQuery($query);
+		}
 		private function getUsers() {
 			$this->check_request_method();
 			$query = "SELECT u.admin_firstname,
@@ -109,7 +121,7 @@
 				u.admin_username,
 				u.admin_email,
 				u.admin_phone,
-				u.admin_title from admin u";
+				u.admin_title FROM admin u";
 			$this->parseQuery($query);
 		}
 		private function getLogins() {
