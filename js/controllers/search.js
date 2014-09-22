@@ -69,6 +69,7 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 		api.getLogins().then(function(logins) {
 			api.getRevisions().then(function(revisions) {
 				$scope.revisions = revisions.data;
+				$scope.revisions.reverse();
 				for (var i in $scope.revisions) {
 					var r = $scope.revisions[i];
 					r.data = JSON.parse(r.data_json);

@@ -1,11 +1,21 @@
-div(ng-repeat="revision in revisions | filter:q:strict | limitTo:quantity")
-	.row
-		.col-md-1 ID
-		.col-md-3 Submitter
-		.col-md-3 Date
-		.col-md-5 Client
-	.row
-		.col-md-1 {{revision.revision_id}}
-		.col-md-3 {{revision.user}}
-		.col-md-3 {{revision.date}}
-		.col-md-5 {{revision.data.name}}
+.revisions-list
+	table.table.table-hover.table-condensed.center
+		thead
+			tr
+				td ID
+				td Client
+				td Date
+				td User
+				td
+		tbody(ng-repeat="revision in revisions | filter:q:strict | limitTo:quantity" ng-init="element.isCollapsed = true")
+			tr
+				td {{revision.revision_id}}
+				td {{revision.data.name}}
+				td {{revision.date}}
+				td {{revision.user}}
+				td.right-justify: button.btn.btn-default(ng-click="element.isCollapsed = !element.isCollapsed") Details
+			tr(ng-if="!element.isCollapsed")
+				td
+					.row
+						.col-md-1 Description
+						.col-md-11 {{revision.data.description}}
