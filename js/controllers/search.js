@@ -72,7 +72,6 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 				for (var i in $scope.revisions) {
 					var r = $scope.revisions[i];
 					r.data = JSON.parse(r.data_json);
-					console.log(r.data);
 				}
 				$scope.logins = logins.data;
 				for (var i in $scope.logins) {
