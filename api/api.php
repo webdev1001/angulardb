@@ -156,6 +156,28 @@
 					ON ws.w_client_id = c.client_id";
 			$this->parseQuery($query);
 		}
+		function recordRevision($data) {
+			$result = $this->mysqli->query("SELECT COUNT(*) AS revisionCount FROM revision_history");
+			$row = $result->fetch_assoc();
+			$count = $row["revisionCount"];
+			$result->close();
+			$stmt = $this->mysqli->prepare("INSERT INTO revision_history
+				(revision_id, client_id, user, date, data_json)
+				VALUES (?, ?, ?, ?, ?)");
+			if ($stmt) {
+				$stmt->bind_param("iisss", $revision_id, $client_id, $user, $date, $data_json);
+				$request = json_decode($data);
+				$revision_id = $count + 1;
+				$client_id = $request->id;
+				$user = $request->last_edited_by;
+				$date = $request->last_edited_date;
+				$data_json = $data;
+				if ($stmt->execute()) echo "Change added to revision history: " . $revision_id . ". ";
+				else echo "Fail!";
+				$this->mysqli->commit();
+				$stmt->close();
+			} else echo "Failed to add update to revision history. ";
+		}
 		function updateClient() {
 			$postdata = file_get_contents("php://input");
 			$request = json_decode($postdata);
@@ -178,6 +200,7 @@
 				else echo $msg_db_fail . "client. ";
 				$this->mysqli->commit();
 				$stmt->close();
+				$this->recordRevision($postdata);
 			} else echo $msg_mysqli_fail;
 			$i = count($request->sites);
 			if ($i) {

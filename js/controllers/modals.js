@@ -53,9 +53,8 @@ var clientDetailsModalInstanceController = function ($scope, $modalInstance, cli
 };
 
 var clientEditModalInstanceController = function ($scope, $modalInstance, api, objects, utilities, client) {
-	$scope.collapseEverything = function (element) {
-		element.isCollapsed = true;
-	}
+	$scope.addCollapsed = true;
+	$scope.collapseEverything = function (element) { element.isCollapsed = true; }
 	$scope.refresh = function (client, changed) {
 		changed = changed ? changed : false;
 		var i = client.sites.length;
@@ -98,8 +97,11 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, api, o
 					loaded: false
 				}
 			}
+			console.log(response);
 		});
 	}
 	$scope.ok = function () { $modalInstance.close(); };
 	$scope.refresh(client);
 };
+
+

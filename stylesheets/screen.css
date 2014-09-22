@@ -223,6 +223,20 @@ span.match {
   font-weight: bold;
 }
 
+/* line 79, ../sass/partials/_search.scss */
+span.status {
+  margin: 0 6px;
+}
+
+/* line 82, ../sass/partials/_search.scss */
+.toggle {
+  text-align: center;
+}
+/* line 84, ../sass/partials/_search.scss */
+.toggle .glyphicon-chevron-up {
+  left: 1px;
+}
+
 /* line 1, ../sass/partials/_modals.scss */
 .modal-dialog {
   overflow: auto;
@@ -286,21 +300,20 @@ span.match {
 /* line 39, ../sass/partials/_modals.scss */
 .sites-table button {
   font-size: 16px;
-  padding: 0;
-  padding-right: 5px;
+  padding: 0 5px;
 }
 
-/* line 45, ../sass/partials/_modals.scss */
+/* line 44, ../sass/partials/_modals.scss */
 textarea.tall {
   height: 200px;
 }
 
-/* line 48, ../sass/partials/_modals.scss */
+/* line 47, ../sass/partials/_modals.scss */
 .modal-body.client-edit {
   margin: 0 100px;
 }
 
-/* line 51, ../sass/partials/_modals.scss */
+/* line 50, ../sass/partials/_modals.scss */
 .client-details {
   padding: 32px 4px;
   -webkit-box-shadow: 1px 1px 1px 1px black;
@@ -313,13 +326,13 @@ textarea.tall {
   border-radius: 7px;
 }
 
-/* line 57, ../sass/partials/_modals.scss */
+/* line 56, ../sass/partials/_modals.scss */
 .site h4 {
   font-weight: bold;
   border-bottom: 1px solid #ccc;
 }
 
-/* line 62, ../sass/partials/_modals.scss */
+/* line 61, ../sass/partials/_modals.scss */
 .site-inner {
   margin: 8px 0;
   padding: 8px 16px;
@@ -333,7 +346,7 @@ textarea.tall {
   border-radius: 7px;
 }
 
-/* line 68, ../sass/partials/_modals.scss */
+/* line 67, ../sass/partials/_modals.scss */
 .logins {
   padding: 8px 0;
   margin: 0 8px;
@@ -345,31 +358,31 @@ textarea.tall {
   -o-border-radius: 8px;
   border-radius: 8px;
 }
-/* line 74, ../sass/partials/_modals.scss */
+/* line 73, ../sass/partials/_modals.scss */
 .logins label {
   font-weight: normal;
 }
-/* line 77, ../sass/partials/_modals.scss */
+/* line 76, ../sass/partials/_modals.scss */
 .logins .type {
   font-weight: bold;
   cursor: pointer;
   text-transform: uppercase;
 }
-/* line 81, ../sass/partials/_modals.scss */
+/* line 80, ../sass/partials/_modals.scss */
 .logins .type .url {
   text-transform: none;
 }
-/* line 85, ../sass/partials/_modals.scss */
+/* line 84, ../sass/partials/_modals.scss */
 .logins .login:not(:first-child) {
   margin-top: 12px;
 }
 
-/* line 89, ../sass/partials/_modals.scss */
+/* line 88, ../sass/partials/_modals.scss */
 .details {
   padding: 0 8px;
 }
 
-/* line 95, ../sass/partials/_modals.scss */
+/* line 94, ../sass/partials/_modals.scss */
 label {
   text-transform: uppercase;
 }
@@ -438,9 +451,4 @@ table {
   -webkit-box-shadow: 2px 2px 5px 0px #323232;
   -moz-box-shadow: 2px 2px 5px 0px #323232;
   box-shadow: 2px 2px 5px 0px #323232;
-}
-
-/* line 34, ../sass/partials/_app.scss */
-.glyphicon {
-  margin-left: 5px !important;
 }

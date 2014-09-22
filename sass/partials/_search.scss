@@ -76,3 +76,10 @@ select {
 span.match {
 	font-weight: bold;
 }
+span.status {
+	margin: 0 6px;
+}
+.toggle {
+	text-align: center;
+	.glyphicon-chevron-up { left: 1px; }
+}

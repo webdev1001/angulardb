@@ -5,7 +5,7 @@ script(type="text/ng-template" id="clientEditModal.html")
 			button.btn.btn-warning(type="submit" ng-click="submit()") Submit Changes
 			button.btn.btn-primary(ng-click="ok()") Done
 			img.spinner-small.inline-block(ng-if="status.loaded == false" src="img/spinner.gif")
-			span(ng-if="status.text"): i.glyphicon.glyphicon-ok
+			span.status(ng-if="status.text"): i.glyphicon.glyphicon-ok
 		.modal-body.client-edit
 			.row
 				.col-md-12
@@ -26,12 +26,23 @@ script(type="text/ng-template" id="clientEditModal.html")
 			.row(ng-if="client.sites")
 				.col-md-12
 					h3 Web Sites
+					.row.add
+						.col-md-12
+							.row
+								.col-md-12
+									button.btn.btn-default(ng-click="addCollapsed = !addCollapsed") {{addCollapsed ? "New" : "Nevermind"}}
+							.row(collapse="addCollapsed")
+								.col-md-12
+									.row
+										.col-md-12
+											h4 Add New Site
+									.row.form-group
 					.row.site(ng-repeat="site in client.sites track by $index" ng-init="element.isCollapsed = true")
 						.col-md-12.site-inner
 							.row
 								.col-md-12
 									h4 {{sites[$index].name}} {{sites[$index].name != sites[$index].url ? " | " + sites[$index].url : ""}}
-									button.btn.btn-default(ng-click="element.isCollapsed = !element.isCollapsed") Show Details
+									button.btn.btn-default(ng-click="element.isCollapsed = !element.isCollapsed") {{element.isCollapsed ? "Show Details" : "Hide Details"}}
 							.row.form-group.details(collapse="element.isCollapsed")
 								.col-md-12
 									.row
@@ -69,7 +80,7 @@ script(type="text/ng-template" id="clientEditModal.html")
 													input.form-control#loginPassword(ng-model="sites[$parent.$parent.$index].logins.passwords[$index]")
 		.modal-footer
 			img.spinner-small.inline-block(ng-if="status.loaded == false" src="img/spinner.gif")
-			span(ng-if="status.text"): i.glyphicon.glyphicon-ok
+			span.status(ng-if="status.text"): i.glyphicon.glyphicon-ok
 			button.btn.btn-warning(type="submit" ng-click="submit()") Submit Changes
 			button.btn.btn-primary(ng-click="ok()") Done
 			br
