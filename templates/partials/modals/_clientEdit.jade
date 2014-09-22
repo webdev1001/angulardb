@@ -30,7 +30,7 @@ script(type="text/ng-template" id="clientEditModal.html")
 					.col-md-12
 						.row
 							.col-md-12
-								h4 {{sites[$index].name}}
+								h4 {{sites[$index].name}} {{sites[$index].name != sites[$index].url ? " | " + sites[$index].url : ""}}
 						.row.form-group.details
 							.col-md-12
 								.row

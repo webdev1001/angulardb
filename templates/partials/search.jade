@@ -10,7 +10,7 @@
 					label show
 					| &nbsp;
 					input.form-control.quantity(type="number" min="1" value="{{quantity}}" ng-model="quantity" ng-maxlength="4")
-					| &nbsp;results | has admin access: {{currentUser.hasAccess("admin")}} | {{currentUser.level}}
+					| &nbsp;results
 				tabset
 					tab(heading="clients" ng-if="currentUser.hasAccess('dev')")
 						include tabs/_clientsList.jade

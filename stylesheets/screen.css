@@ -321,6 +321,11 @@ textarea.tall {
   margin-top: 12px;
 }
 
+/* line 70, ../sass/partials/_modals.scss */
+.details {
+  padding: 0 8px;
+}
+
 /* line 1, ../sass/partials/_login.scss */
 .login-container {
   margin-top: 15%;
