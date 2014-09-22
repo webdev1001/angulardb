@@ -156,7 +156,12 @@
 					ON ws.w_client_id = c.client_id";
 			$this->parseQuery($query);
 		}
-		function recordRevision($data) {
+		private function getRevisions() {
+			$this->check_request_method();
+			$query = "SELECT * FROM revision_history";
+			$this->parseQuery($query);
+		}
+		private function recordRevision($data) {
 			$result = $this->mysqli->query("SELECT COUNT(*) AS revisionCount FROM revision_history");
 			$row = $result->fetch_assoc();
 			$count = $row["revisionCount"];
@@ -178,7 +183,7 @@
 				$stmt->close();
 			} else echo "Failed to add update to revision history. ";
 		}
-		function updateClient() {
+		private function updateClient() {
 			$postdata = file_get_contents("php://input");
 			$request = json_decode($postdata);
 			$msg_mysqli_fail = "Failed to initialize mysqli->prepare().";

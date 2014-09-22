@@ -20,6 +20,8 @@
 						include tabs/_loginsList.jade
 					tab(heading="people" ng-if="currentUser.hasAccess('user')")
 						include tabs/_peopleList.jade
+					tab(heading="revisions" ng-if="currentUser.hasAccess('dev')")
+						include tabs/_revisionsList.jade
 				.row.center-justify
 					button.btn.btn-primary(ng-if="results < clients.length" ng-click="showMore(quantity)") show {{quantity}} more
 

@@ -67,52 +67,60 @@ viewControllers.controller("searchViewController", function ($rootScope, $state,
 	if (!$rootScope.authenticated) $state.go("login");
 	api.getClients().then(function(clients) {
 		api.getLogins().then(function(logins) {
-			$scope.logins = logins.data;
-			for (var i in $scope.logins) {
-				var l = $scope.logins[i];
-				l = utilities.explode(l,",");
-			}
-			$scope.clients = clients.data;
-			for (var i in $scope.clients) {
-				var c = $scope.clients[i];
-				var client = new objects.Client(
-					c.client_id,
-					c.client_name,
-					c.client_description,
-					{ a: c.created_by, b: c.last_edited_by },
-					{ a: c.creation_date, b: c.last_edited_date }
-				);
-				if (c.w_client_id) {
-					c = utilities.explode(c,",","w_web");
-					if (c.w_website_ids.length > 0) {
-						for (var j in c.w_website_ids) {
-							for (var k in $scope.logins) {
-								var l = $scope.logins[k];
-								if (l.website_id === c.w_website_ids[j] && l.l_login_types) {
-									var site = new objects.Site(
-										l.website_id,
-										c.w_website_names[j],
-										c.w_website_urls[j],
-										{
-											ids: l.l_login_ids,
-											types: l.l_login_types,
-											connections: l.l_login_connections,
-											usernames: l.l_login_usernames,
-											passwords: l.l_login_passwords
-										}
-									);
-									client.sites.push(site);
+			api.getRevisions().then(function(revisions) {
+				$scope.revisions = revisions.data;
+				for (var i in $scope.revisions) {
+					var r = $scope.revisions[i];
+					r.data = JSON.parse(r.data_json);
+					console.log(r.data);
+				}
+				$scope.logins = logins.data;
+				for (var i in $scope.logins) {
+					var l = $scope.logins[i];
+					l = utilities.explode(l,",");
+				}
+				$scope.clients = clients.data;
+				for (var i in $scope.clients) {
+					var c = $scope.clients[i];
+					var client = new objects.Client(
+						c.client_id,
+						c.client_name,
+						c.client_description,
+						{ a: c.created_by, b: c.last_edited_by },
+						{ a: c.creation_date, b: c.last_edited_date }
+					);
+					if (c.w_client_id) {
+						c = utilities.explode(c,",","w_web");
+						if (c.w_website_ids.length > 0) {
+							for (var j in c.w_website_ids) {
+								for (var k in $scope.logins) {
+									var l = $scope.logins[k];
+									if (l.website_id === c.w_website_ids[j] && l.l_login_types) {
+										var site = new objects.Site(
+											l.website_id,
+											c.w_website_names[j],
+											c.w_website_urls[j],
+											{
+												ids: l.l_login_ids,
+												types: l.l_login_types,
+												connections: l.l_login_connections,
+												usernames: l.l_login_usernames,
+												passwords: l.l_login_passwords
+											}
+										);
+										client.sites.push(site);
+									}
 								}
 							}
 						}
 					}
+					$scope.clients[i] = client;
 				}
-				$scope.clients[i] = client;
-			}
-			$scope.results = 0;
-			$scope.quantity = 10;
-			$scope.increment = 10;
-			$scope.clients.toBeReversed = true;
+				$scope.results = 0;
+				$scope.quantity = 10;
+				$scope.increment = 10;
+				$scope.clients.toBeReversed = true;
+			});
 		});
 	});
 });
