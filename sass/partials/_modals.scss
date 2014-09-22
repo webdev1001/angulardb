@@ -45,3 +45,31 @@
 textarea.tall {
 	height: 200px;
 }
+.site {
+	h4 {
+		font-weight: bold;
+		border-bottom: 1px solid #ccc;
+	}
+}
+.logins {
+	padding: 8px 0;
+	margin: 0 8px;
+	background-color: #efefef;
+	border: 1px solid #ccc;
+	@include border-radius(8px);
+	label {
+		font-weight: normal;
+	}
+	.type {
+		font-weight: bold;
+	}
+	.login:not(:first-child) {
+		margin-top: 12px;
+	}
+}
+.details {
+
+}
+.back-to-top {
+
+}
