@@ -7,9 +7,9 @@ table.table.table-hover.table-condensed.center
 			th.col-md-2.clickable
 	tbody
 		tr(ng-repeat="client in clients | filter:q:strict | limitTo:quantity" ng-init="update()")
-			td.col-md-1.success(ng-if="client.id.toLowerCase().indexOf(q.$.toLowerCase()) != -1") {{client.id}}
+			td.col-md-1(ng-if="client.id.toLowerCase().indexOf(q.$.toLowerCase()) != -1"): span.match {{client.id}}
 			td.col-md-1(ng-if="client.id.toLowerCase().indexOf(q.$.toLowerCase()) == -1") {{client.id}}
-			td.col-md-8.success(ng-if="client.name.toLowerCase().indexOf(q.$.toLowerCase()) != -1") {{client.name}}
+			td.col-md-8(ng-if="client.name.toLowerCase().indexOf(q.$.toLowerCase()) != -1"): span.match {{client.name}}
 			td.col-md-8(ng-if="client.name.toLowerCase().indexOf(q.$.toLowerCase()) == -1") {{client.name}}
 			td.col-md-1 {{client.sites.length}}
 			td.col-md-2

@@ -6,7 +6,7 @@ script(type="text/ng-template" id="clientEditModal.html")
 			button.btn.btn-primary(ng-click="ok()") Done
 			img.spinner-small.inline-block(ng-if="status.loaded == false" src="img/spinner.gif")
 			span(ng-if="status.text"): i.glyphicon.glyphicon-ok
-		.modal-body
+		.modal-body.client-edit
 			.row
 				.col-md-12
 					h3 Client Details
