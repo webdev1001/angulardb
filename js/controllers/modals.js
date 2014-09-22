@@ -53,6 +53,9 @@ var clientDetailsModalInstanceController = function ($scope, $modalInstance, cli
 };
 
 var clientEditModalInstanceController = function ($scope, $modalInstance, api, objects, utilities, client) {
+	$scope.collapseEverything = function (element) {
+		element.isCollapsed = true;
+	}
 	$scope.refresh = function (client, changed) {
 		changed = changed ? changed : false;
 		var i = client.sites.length;

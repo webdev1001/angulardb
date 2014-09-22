@@ -10,7 +10,7 @@ script(type="text/ng-template" id="clientEditModal.html")
 			.row
 				.col-md-12
 					h3 Client Details
-			.row.form-group
+			.row.form-group.client-details
 				.col-md-12
 					.row
 						.col-md-1
@@ -23,47 +23,50 @@ script(type="text/ng-template" id="clientEditModal.html")
 						.col-md-12
 							label(for="editDescription") Description
 							textarea.form-control.tall#editDescription(ng-model="client.description")
-			.row
+			.row(ng-if="client.sites")
 				.col-md-12
 					h3 Web Sites
-				.row.site(ng-if="client.sites" ng-repeat="site in client.sites track by $index")
-					.col-md-12
-						.row
-							.col-md-12
-								h4 {{sites[$index].name}} {{sites[$index].name != sites[$index].url ? " | " + sites[$index].url : ""}}
-						.row.form-group.details
-							.col-md-12
-								.row
-									.col-md-1
-										label(for="siteName") ID
-										input.form-control#siteID(ng-model="sites[$index].id")
-									.col-md-11
-										label(for="siteName") Name
-										input.form-control#siteName(ng-model="sites[$index].name")
-								.row
-									.col-md-12
-										label(for="siteName") URL
-										input.form-control#siteURL(ng-model="sites[$index].url")
-						.row.form-group.logins(ng-if="site.logins.types")
-							.col-md-12
-								.row(ng-repeat="login in site.logins.types track by $index")
-									.col-md-12.login
-										.row
-											.col-md-12.type {{login}}
-										.row
-											.col-md-2
-												label(for="loginType") Type
-												input.form-control#loginType(ng-model="sites[$parent.$parent.$index].logins.types[$index]")
-											.col-md-10
-												label(for="loginConnection") Connection (URL)
-												input.form-control#loginConnection(ng-model="sites[$parent.$parent.$index].logins.connections[$index]")
-										.row
-											.col-md-6
-												label(for="loginUsername") Username
-												input.form-control#loginUsername(ng-model="sites[$parent.$parent.$index].logins.usernames[$index]")
-											.col-md-6
-												label(for="loginPassword") Password
-												input.form-control#loginPassword(ng-model="sites[$parent.$parent.$index].logins.passwords[$index]")
+					.row.site(ng-repeat="site in client.sites track by $index" ng-init="element.isCollapsed = true")
+						.col-md-12.site-inner
+							.row
+								.col-md-12
+									h4 {{sites[$index].name}} {{sites[$index].name != sites[$index].url ? " | " + sites[$index].url : ""}}
+									button.btn.btn-default(ng-click="element.isCollapsed = !element.isCollapsed") Show Details
+							.row.form-group.details(collapse="element.isCollapsed")
+								.col-md-12
+									.row
+										.col-md-1
+											label(for="siteName") ID
+											input.form-control#siteID(ng-model="sites[$index].id")
+										.col-md-11
+											label(for="siteName") Name
+											input.form-control#siteName(ng-model="sites[$index].name")
+									.row
+										.col-md-12
+											label(for="siteName") URL
+											input.form-control#siteURL(ng-model="sites[$index].url")
+							.row.form-group.logins(ng-if="site.logins.types" collapse="element.isCollapsed")
+								.col-md-12
+									h4 Logins
+									.row(ng-repeat="login in site.logins.types track by $index" ng-init="element = innerElement; innerElement.isCollapsed = true")
+										.col-md-12.login
+											.row
+												.col-md-12.type(ng-click="innerElement.isCollapsed = !innerElement.isCollapsed")
+													span(tooltip="Click for details" tooltip-placement="right") {{login}} #[span.url ({{sites[$parent.$parent.$index].logins.connections[$index]}})]
+											.row(collapse="innerElement.isCollapsed")
+												.col-md-2
+													label(for="loginType") Type
+													input.form-control#loginType(ng-model="sites[$parent.$parent.$index].logins.types[$index]")
+												.col-md-10
+													label(for="loginConnection") Connection (URL)
+													input.form-control#loginConnection(ng-model="sites[$parent.$parent.$index].logins.connections[$index]")
+											.row(collapse="innerElement.isCollapsed")
+												.col-md-6
+													label(for="loginUsername") Username
+													input.form-control#loginUsername(ng-model="sites[$parent.$parent.$index].logins.usernames[$index]")
+												.col-md-6
+													label(for="loginPassword") Password
+													input.form-control#loginPassword(ng-model="sites[$parent.$parent.$index].logins.passwords[$index]")
 		.modal-footer
 			img.spinner-small.inline-block(ng-if="status.loaded == false" src="img/spinner.gif")
 			span(ng-if="status.text"): i.glyphicon.glyphicon-ok

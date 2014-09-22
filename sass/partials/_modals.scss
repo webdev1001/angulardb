@@ -45,11 +45,22 @@
 textarea.tall {
 	height: 200px;
 }
+.client-details {
+	padding: 32px 4px;
+	@include box-shadow(1px 1px 1px 1px rgba(0,0,0,1));
+	@include border-radius(7px);
+}
 .site {
 	h4 {
 		font-weight: bold;
 		border-bottom: 1px solid #ccc;
 	}
+}
+.site-inner {
+	margin: 8px 0;
+	padding: 8px 16px;
+	@include box-shadow(1px 1px 1px 1px rgba(0,0,0,1));
+	@include border-radius(7px);
 }
 .logins {
 	padding: 8px 0;
@@ -62,6 +73,11 @@ textarea.tall {
 	}
 	.type {
 		font-weight: bold;
+		cursor: pointer;
+		text-transform: uppercase;
+		.url {
+			text-transform: none;
+		}
 	}
 	.login:not(:first-child) {
 		margin-top: 12px;
@@ -72,4 +88,7 @@ textarea.tall {
 }
 .back-to-top {
 
+}
+label {
+	text-transform: uppercase;
 }
