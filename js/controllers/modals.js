@@ -19,8 +19,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 uiControllers.controller("userMenuModalsController", function ($scope, $modal, objects) {
-	console.log($scope.revisions);
 	$scope.open = function (modal) {
+		switch (modal.controller) {
+			case "revisionsList":
+				modal.controller = revisionsListModalInstanceController;
+				break;
+			default:
+				modal.controller = revisionsListModalInstanceController;
+				break;
+		}
 		modal.size = modal.size ? modal.size : "lg";
 		var modalInstance = $modal.open({
 			templateUrl: modal.url,
@@ -30,7 +37,7 @@ uiControllers.controller("userMenuModalsController", function ($scope, $modal, o
 	};
 });
 
-var revisionsListModalInstanceController = function ($scope, $modalInstance, client) {
+var revisionsListModalInstanceController = function ($scope, $modalInstance) {
 	$scope.ok = function () { $modalInstance.close(); }
 };
 
@@ -106,6 +113,8 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, api, o
 					type: "success",
 					loaded: true
 				};
+				var revision = new objects.Revision($scope.revisions.length+1, client.id, client.name, $scope.currentUser.name, client);
+				$scope.revisions.splice(0, 0, revision);
 			} else {
 				$scope.status = {
 					text: "Oops. There was a problem: " + response.data,

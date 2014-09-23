@@ -1,6 +1,7 @@
 script(type="text/ng-template" id="revisionsListModal.html")
 	.modal-header
 		h2 Revisions
+		button.btn.btn-primary(ng-click="ok()") OK
 	.modal-body
 		.revisions-list
 			table.table.table-hover.table-condensed.center
@@ -19,7 +20,18 @@ script(type="text/ng-template" id="revisionsListModal.html")
 						td {{revision.user}}
 						td.right-justify: button.btn.btn-default(ng-click="element.isCollapsed = !element.isCollapsed") Details
 					tr(ng-if="!element.isCollapsed")
-						td
-							.row
-								.col-md-1 Description
-								.col-md-11 {{revision.dataJSON.description}}
+						td(colspan=1) Description
+						td(colspan=4) {{revision.dataJSON.description}}
+					.sites(ng-repeat="revisionSite in revision.dataJSON.sites track by $index")
+						tr(ng-if="!element.isCollapsed")
+							td(colspan=5).center-justify Sites
+						tr(ng-if="!element.isCollapsed")
+							td(colspan=1) Name
+							td(colspan=4) {{revision.dataJSON.sites[$index].name}} [ID: {{revision.dataJSON.sites[$index].id}}]
+						tr(ng-if="!element.isCollapsed")
+							td(colspan=1) URL
+							td(colspan=4) {{revision.dataJSON.sites[$index].url}}
+		button.btn.btn-primary(ng-click="ok()") OK
+		.row
+			.col-md-12.center-justify
+				img(src="img/hrwlogo1.png")

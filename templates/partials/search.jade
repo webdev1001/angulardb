@@ -10,7 +10,7 @@
 					button.btn.btn-primary.dropdown-toggle(ng-disabled="disabled") View&nbsp;
 						span.caret
 					ul.dropdown-menu(role="menu" ng-controller="userMenuModalsController")
-						li(ng-if="currentUser.hasAccess('admin')"): span.clickable(ng-click="open({url: 'revisionsListModal.html', controller: revisionsListModalInstanceController })") Revision history
+						li(ng-if="currentUser.hasAccess('admin')"): a.clickable(ng-click="open({url: 'revisionsListModal.html' })") Revision history
 							include modals/_revisionsList
 	.search-container-inner
 		h1(ng-if="q.$") #[i.glyphicon.glyphicon-search] beta
