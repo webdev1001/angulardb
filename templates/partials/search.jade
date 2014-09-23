@@ -1,6 +1,17 @@
 .spinner.center-justify(ng-if="!clients")
-	img(src="img/spinner.gif" alt="initializing...")
-.search-container(ng-if="clients" )
+		img(src="img/spinner.gif" alt="initializing...")
+.search-container(ng-if="clients")
+	.row(ng-controller="loginController")
+		.col-md-9
+		.col-md-3(ng-if="authenticated")
+			.btn-group
+				button.btn.btn-primary(ng-click="logout()") Log Out ({{currentUser.name}})
+				.btn-group(dropdown is-open="status.isopen")
+					button.btn.btn-primary.dropdown-toggle(ng-disabled="disabled") View&nbsp;
+						span.caret
+					ul.dropdown-menu(role="menu" ng-controller="userMenuModalsController")
+						li(ng-if="currentUser.hasAccess('admin')"): span.clickable(ng-click="open({url: 'revisionsListModal.html', controller: revisionsListModalInstanceController })") Revision history
+							include modals/_revisionsList
 	.search-container-inner
 		h1(ng-if="q.$") #[i.glyphicon.glyphicon-search] beta
 		input#search(type="search" ng-model="q.$" value="" placeholder="start typing..." ng-style="q.$ && {'margin-top': '3%'} || !q.$ && {'margin-top': '20%'}" autofocus).search.form-control
@@ -20,7 +31,7 @@
 						include tabs/_loginsList.jade
 					tab(heading="people" ng-if="currentUser.hasAccess('user')")
 						include tabs/_peopleList.jade
-					tab(heading="revisions" ng-if="currentUser.hasAccess('dev')")
+					//tab(heading="revisions" ng-if="currentUser.hasAccess('dev')")
 						include tabs/_revisionsList.jade
 				.row.center-justify
 					button.btn.btn-primary(ng-if="results < clients.length" ng-click="showMore(quantity)") show {{quantity}} more

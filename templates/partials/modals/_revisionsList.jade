@@ -1,0 +1,25 @@
+script(type="text/ng-template" id="revisionsListModal.html")
+	.modal-header
+		h2 Revisions
+	.modal-body
+		.revisions-list
+			table.table.table-hover.table-condensed.center
+				thead
+					tr
+						td ID
+						td Client
+						td Date
+						td User
+						td
+				tbody(ng-repeat="revision in revisions" ng-init="element.isCollapsed = true")
+					tr
+						td {{revision.revisionId}}
+						td {{revision.dataJSON.name}}
+						td {{revision.date}}
+						td {{revision.user}}
+						td.right-justify: button.btn.btn-default(ng-click="element.isCollapsed = !element.isCollapsed") Details
+					tr(ng-if="!element.isCollapsed")
+						td
+							.row
+								.col-md-1 Description
+								.col-md-11 {{revision.dataJSON.description}}

@@ -1,6 +1,6 @@
 script(type="text/ng-template" id="clientEditModal.html")
 	form(role="form" novalidate)
-		.modal-header(name="top")
+		.modal-header
 			h2 #[i.glyphicon.glyphicon-list-alt] {{client.name}}
 			button.btn.btn-warning(type="submit" ng-click="submit()") Submit Changes
 			button.btn.btn-primary(ng-click="ok()") Done

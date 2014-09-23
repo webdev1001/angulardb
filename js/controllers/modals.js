@@ -18,6 +18,22 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+uiControllers.controller("userMenuModalsController", function ($scope, $modal, objects) {
+	console.log($scope.revisions);
+	$scope.open = function (modal) {
+		modal.size = modal.size ? modal.size : "lg";
+		var modalInstance = $modal.open({
+			templateUrl: modal.url,
+			controller: modal.controller,
+			size: modal.size
+		});
+	};
+});
+
+var revisionsListModalInstanceController = function ($scope, $modalInstance, client) {
+	$scope.ok = function () { $modalInstance.close(); }
+};
+
 uiControllers.controller("clientListModalsController", function ($scope, $modal, objects) {
 	$scope.view = function (client) {
 		var modalInstance = $modal.open({
