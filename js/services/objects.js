@@ -120,5 +120,19 @@ objServices.factory("objects", [function(){
 		}
 		return false;
 	}
+	obj.Revision = function (revisionId, clientId, user, date, dataJSON) {
+		this.revisionId = revisionId ? revisionId : -1;
+		this.clientId = clientId ? clientId : -1;
+		this.user = user ? user : "";
+		this.date = date ? date : "";
+		this.dataJSON = dataJSON ? dataJSON : "";
+	}
+	obj.Revision.prototype.clone = function (revision) {
+		this.revisionId = revision.revisionId;
+		this.clientId = revision.clientId;
+		this.user = revision.user;
+		this.date = revision.date;
+		this.dataJSON = revision.dataJSON;
+	}
 	return obj;
 }]);

@@ -9,8 +9,8 @@
 				td
 		tbody(ng-repeat="revision in revisions | filter:q:strict | limitTo:quantity" ng-init="element.isCollapsed = true")
 			tr
-				td {{revision.revision_id}}
-				td {{revision.data.name}}
+				td {{revision.revisionId}}
+				td {{revision.dataJSON.name}}
 				td {{revision.date}}
 				td {{revision.user}}
 				td.right-justify: button.btn.btn-default(ng-click="element.isCollapsed = !element.isCollapsed") Details
@@ -18,4 +18,4 @@
 				td
 					.row
 						.col-md-1 Description
-						.col-md-11 {{revision.data.description}}
+						.col-md-11 {{revision.dataJSON.description}}
