@@ -1,5 +1,5 @@
 # angulardb
-A web design and SEO marketing database front- and back-end application. Uses AngularJS with a RESTful PHP MySQL API.
+A web design and SEO marketing database front- and back-end application. Uses AngularJS with a RESTful PHP MySQL API. Full CRUD with revision history and version control.
 
 ## Installation
 
