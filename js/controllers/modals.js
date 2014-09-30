@@ -114,7 +114,7 @@ var clientEditModalInstanceController = function ($scope, $modalInstance, api, o
 					loaded: true
 				};
 				var revisionId = $scope.revisions ? $scope.revisions.length+1 : 0;
-				var revision = new objects.Revision(revisionId, client.id, client.name, $scope.currentUser.name, client);
+				var revision = new objects.Revision(revisionId, client.id, $scope.currentUser.name, client.last_edited_date, client);
 				$scope.revisions.splice(0, 0, revision);
 			} else {
 				$scope.status = {
