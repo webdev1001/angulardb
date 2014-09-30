@@ -11,7 +11,7 @@
 					ul.dropdown-menu(role="menu" ng-controller="loginController")
 						li: a.clickable(ng-click="logout()") Logout
 				.btn-group(dropdown is-open="usermenu-dash.isopen")
-					button.btn.btn-primary.dropdown-toggle(ng-disabled="disabled") View&nbsp;
+					button.btn.btn-primary.dropdown-toggle(ng-disabled="disabled") Clients&nbsp;
 						span.caret
 					ul.dropdown-menu(role="menu" ng-controller="userMenuModalsController")
 						li(ng-if="currentUser.hasAccess('admin')"): a.clickable(ng-click="open({url: 'revisionsListModal.html' })") Revision history
