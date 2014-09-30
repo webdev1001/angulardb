@@ -22,6 +22,11 @@ var paths = {
 	}
 };
 
+function handleError(err) {
+  console.log(err.toString());
+  this.emit('end');
+}
+
 gulp.task("styles", function() {
 	return gulp.src(paths.styles.src)
 		.pipe(plumber())
@@ -30,6 +35,7 @@ gulp.task("styles", function() {
 			sass: "./sass",
 			image: "./images"
 		}))
+		.on('error', handleError)
 		.pipe(plumber.stop())
 		.pipe(gulp.dest(paths.styles.dest));
 });
